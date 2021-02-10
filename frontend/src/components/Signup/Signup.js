@@ -27,7 +27,7 @@ function Signup(props) {
     });
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     let errors = {};
     handleValidation();
     event.preventDefault();
@@ -38,23 +38,23 @@ function Signup(props) {
       confirmPassword: registerState.password,
     };
     if (registerState.formIsValid) {
-      getUsers().then((data) => {
-        console.log(data);
-        const alreadyRegisteredUser = data.find(
-          (element) => element.email === registerState.email
-        );
-        if (!alreadyRegisteredUser) {
-          registerUser(userData).then((res) => {
-            history.push("/activate");
-          });
-          console.log("Form submitted");
+      try {
+        console.log(userData);
+        const res = await registerUser(userData);
+        console.log(res.data);
+        if (res.data.error) {
+          errors["failure"] = `${res.data.message}`;
         } else {
-          errors["email"] = "Email already exists";
-          setRegisterState({ ...registerState, errors });
+          console.log("Form submitted");
+          history.push("/activate");
         }
-      });
+      } catch (error) {
+        errors["email"] = "Email already exists";
+        setRegisterState({ ...registerState, errors });
+      }
     } else {
       console.log("Form has errors.");
+      errors["failure"] = "Error signing up";
     }
   };
 
@@ -66,6 +66,9 @@ function Signup(props) {
             <h1 className="mb-3 h3 font-weight normal">
               Sign up to get started!
             </h1>
+            <span style={{ color: "red" }}>
+              {registerState.errors["failure"]}
+            </span>
             <div className="form-group">
               <label htmlFor="first_name">Username</label>
               <input

@@ -27,17 +27,19 @@ export const checkFormFields = ({ email, name, password, confirmPassword }) => {
     formIsValid = false;
     errors["name"] = "Cannot be empty";
   } else if (typeof name !== "undefined") {
-    if (!name.match(/^[a-zA-Z]+$/)) {
+    if (!name.match(/^[a-zA-Z]+$/) || name.length >= 30) {
       formIsValid = false;
-      errors["name"] = "Only letters";
+      errors["name"] = "Letters only, and not greater than 30 characters";
     }
   }
 
   // confirm password
   if (!confirmPassword) {
+    console.log("1,", confirmPassword);
     formIsValid = false;
     errors["confirmPassword"] = "Cannot be empty";
   } else if (confirmPassword !== password) {
+    console.log("2,", confirmPassword);
     formIsValid = false;
     errors["confirmPassword"] = "Must match password";
   }

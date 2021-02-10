@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import { GET_ERRORS, SET_CURRENT_USER } from "../../actions/types";
-import { useAppContext } from "../../store";
 import { activateUser } from "../../utils/userFunctions";
-import { setAuthToken } from "../../utils/setAuthToken";
 import { useHistory } from "react-router-dom";
-import jwt_decode from "jwt-decode";
-import { activate } from "../../../../backend/controllers/auth";
+import { checkFormFields } from "./checkFormFields";
 
 function Activate() {
   const history = useHistory();
 
   const [formState, setFormState] = useState({
-    name: "",
     email: "",
-    password: "",
+    code: "",
+    errors: {},
+    formIsValid: true,
   });
 
-  const [, appDispatch] = useAppContext();
+  const handleValidation = () => {
+    const [errors, formIsValid] = checkFormFields(formState);
+    setFormState({ ...formState, errors, formIsValid });
+  };
 
   const onChange = (e) => {
     setFormState({
@@ -25,21 +25,34 @@ function Activate() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const user = {
+  const onSubmit = async (event) => {
+    let errors = {};
+    handleValidation();
+    event.preventDefault();
+    const userData = {
       email: formState.email,
       code: formState.code,
     };
-    try {
-      const response = await activateUser(user);
-
-      history.push("/dashboard");
-    } catch (error) {
-      appDispatch({
-        type: GET_ERRORS,
-        payload: error,
-      });
+    if (formState.formIsValid) {
+      try {
+        console.log(userData);
+        const res = await activateUser(userData);
+        console.log(res.data);
+        if (res.data.error) {
+          errors["failure"] = `${res.data.message}`;
+        } else {
+          console.log("Form submitted");
+          history.push("/signin");
+        }
+      } catch (error) {
+        errors["failure"] =
+          "Unable to activate account, please check you entered the correct details.";
+        setFormState({ ...formState, errors });
+      }
+    } else {
+      console.log("Form has errors.");
+      errors["failure"] =
+        "Error activating, please check that your email and code are correct.";
     }
   };
 
@@ -47,33 +60,39 @@ function Activate() {
     <div className="container">
       <div className="row">
         <div className="mx-auto mt-5 col-md-6">
-          <form noValidate onSubmit={handleSubmit}>
-            <h1 className="mb-3 h3 font-weight normal">Please Sign in</h1>
+          <form noValidate onSubmit={onSubmit}>
+            <h1 className="mb-3 h3 font-weight normal">
+              Please activate your account
+            </h1>
+            <span style={{ color: "red" }}>{formState.errors["failure"]}</span>
             <div className="form-group">
-              <label htmlFor="activateCode">Activation Code</label>
+              <label htmlFor="code">Activation Code</label>
               <input
-                type="number"
+                type="text"
                 className="form-control"
-                name="activation code"
-                placeholder="Enter code sent to your email"
+                name="code"
+                placeholder="Enter code sent to your email (eg: 123456)"
+                value={formState.code}
+                onChange={onChange}
+              />
+            </div>
+            <span style={{ color: "red" }}>{formState.errors["code"]}</span>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                placeholder="Enter email"
                 value={formState.email}
                 onChange={onChange}
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                className="form-control"
-                name="password"
-                placeholder="Enter Password"
-                value={formState.password}
-                onChange={onChange}
-              />
-            </div>
+            <span style={{ color: "red" }}>{formState.errors["email"]}</span>
             <button type="submit" className="btn btn-lg btn-primary btn-block">
-              Sign in
+              Activate your account
             </button>
+            <span className="info-span" style={{ color: "green" }}></span>
           </form>
         </div>
       </div>

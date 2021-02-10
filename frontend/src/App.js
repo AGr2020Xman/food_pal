@@ -23,6 +23,7 @@ import { AppContextProvider } from "./store";
 import Auth from "./Auth";
 
 import "./App.css";
+import Activate from "./components/Activate/Activate";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <div className="p-0 m-0 container-fluid">
             <Route exact path="/signin" component={Signin} />
             <Route exact path="/signup" component={Signup} />
+            <Route exact path="/activate" component={Activate} />
             {/* <Route exact path="/reset" component={Reset} /> */}
             {/* <Route exact path="/forgot" component={Forgot} /> */}
             {/* <Route exact path="/other" component={Auth(Dashboard)} /> */}

@@ -81,6 +81,12 @@ function Signin() {
             <button type="submit" className="btn btn-lg btn-primary btn-block">
               Sign in
             </button>
+            <button
+              type="button"
+              className="btn btn-lg btn-secondary btn-block"
+            >
+              Forgot Password
+            </button>
           </form>
         </div>
       </div>
