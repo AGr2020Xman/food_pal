@@ -75,7 +75,8 @@ function Activate() {
             <div className="form-group">
               <label htmlFor="code">Activation Code</label>
               <input
-                type="number"
+                type="text"
+                refs="code"
                 className="form-control"
                 name="code"
                 placeholder="Enter code sent to your email (eg: 123456)"
@@ -88,6 +89,7 @@ function Activate() {
               <label htmlFor="email">Email</label>
               <input
                 type="email"
+                refs="email"
                 className="form-control"
                 name="email"
                 placeholder="Enter email"
