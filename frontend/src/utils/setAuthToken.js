@@ -8,8 +8,8 @@ export const setAuthToken = (token) => {
     axios.defaults.headers.common["Authorization"] = token;
   } else {
     // Delete auth header
-    console.log("No token so localstorage is remove header");
-    window.localStorage.removeItem("userToken");
+    console.log("No token so localstorage is remove header", token);
+    window.localStorage.clear();
     delete axios.defaults.headers.common["Authorization"];
   }
 };

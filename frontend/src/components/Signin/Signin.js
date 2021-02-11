@@ -6,6 +6,7 @@ import { setAuthToken } from "../../utils/setAuthToken";
 import { useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Button from "@material-ui/core/Button";
+import { toast } from "react-toastify";
 
 function Signin() {
   const history = useHistory();
@@ -40,7 +41,7 @@ function Signin() {
       // Set token to localStorage
       const token = response.data.accessToken;
 
-      console.log("Token from response", token);
+      // console.log("Token from response", token);
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data
@@ -57,6 +58,7 @@ function Signin() {
     } catch (error) {
       errors["failure"] = error.response.data.message;
       setFormState({ ...formState, errors });
+      // toast.dark(error.response.data.message);
       // console.log(error);
       // console.log(appState);
       appDispatch({

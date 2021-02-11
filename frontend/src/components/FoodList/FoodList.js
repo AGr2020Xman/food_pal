@@ -1,3 +1,6 @@
+import React from "react";
+import Grid from "@material-ui/core/Grid";
+
 // import React, { useState, useEffect, useContext } from "react";
 // import ListContext from "../AuthContext/AuthContext";
 // import FoodCard from "../FoodCard/FoodCard";

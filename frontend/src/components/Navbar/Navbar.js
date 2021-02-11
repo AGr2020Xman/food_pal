@@ -48,6 +48,7 @@ const Navbar = () => {
   const handleLogOut = (e) => {
     e.preventDefault();
     console.log("dispatch in handleLogout", dispatch);
+    console.log(state);
     setUserLogout(dispatch);
     setTimeout(() => {
       history.push("/");
@@ -97,11 +98,6 @@ const Navbar = () => {
                 </Link> */}
       </li>
       <li>
-        <Button color="inherit" variant="contained" href="/signout">
-          Sign out
-        </Button>
-      </li>
-      <li>
         <button
           className="btn btn-sm active"
           id="logoutBtn"
@@ -109,7 +105,7 @@ const Navbar = () => {
           data-target="#logoutModal"
           onClick={handleLogOut}
         >
-          <div>Logout</div>
+          <div>Sign out</div>
         </button>
       </li>
     </ul>

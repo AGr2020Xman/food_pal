@@ -1,9 +1,13 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "../utils/setAuthToken";
+import { signoutUser } from "../utils/userFunctions";
 import { SET_CURRENT_USER } from "./types";
 
 export const setUserLogout = async (dispatch) => {
+  console.log("token from local storage to be deleted");
+  // await signoutUser();
+  // localStorage.clear();
   await setAuthToken(false);
   dispatch({ type: SET_CURRENT_USER, payload: {} });
 };

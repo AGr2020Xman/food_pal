@@ -10,6 +10,10 @@ export const registerUser = (userData) => {
   });
 };
 
+export const signoutUser = () => {
+  return axios.get("/api/signout");
+}; // from auth local storage
+
 export const forgotPassword = (userData) => {
   return axios.patch("/api/forgot", {
     email: userData.email,
@@ -37,10 +41,6 @@ export const activateUser = (userData) => {
     code: userData.code,
     email: userData.email,
   });
-};
-
-export const signoutUser = (userData) => {
-  return axios.get("/api/signout", {});
 };
 
 export const getUsers = () => {
