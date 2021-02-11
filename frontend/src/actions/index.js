@@ -15,17 +15,3 @@ export const setUserLoggedIn = async (token, dispatch) => {
   // Set current user
   await dispatch({ type: SET_CURRENT_USER, payload: decodedToken });
 };
-//
-export const activateUser = (userData) => {
-  return axios.post("/api/activate", userData);
-};
-
-// Register User
-// export const registerUser = (userData, history) => {
-//   axios.post("/api/signup", userData).then((res) => history.push("/login"));
-// };
-
-// // Login - get user token
-// export const loginUser = (userData) => {
-//   return axios.post("/api/signin", userData);
-// };

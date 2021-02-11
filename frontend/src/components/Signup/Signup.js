@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { registerUser, getUsers } from "../../utils/userFunctions";
+import { registerUser } from "../../utils/userFunctions";
 import { checkFormFields } from "./checkFormFields";
 
 function Signup(props) {
@@ -132,6 +132,12 @@ function Signup(props) {
             <button type="submit" className="btn btn-lg btn-primary btn-block">
               Sign Up
             </button>
+            <p className="text-center">
+              Already have an account?
+              <em>
+                <a href="/signin"> Sign in here</a>
+              </em>
+            </p>
           </form>
         </div>
       </div>

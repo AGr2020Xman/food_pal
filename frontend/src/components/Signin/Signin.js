@@ -5,6 +5,7 @@ import { loginUser } from "../../utils/userFunctions";
 import { setAuthToken } from "../../utils/setAuthToken";
 import { useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import Button from "@material-ui/core/Button";
 
 function Signin() {
   const history = useHistory();
@@ -78,16 +79,28 @@ function Signin() {
                 onChange={onChange}
               />
             </div>
-            <button type="submit" className="btn btn-lg btn-primary btn-block">
-              Sign in
-            </button>
-            <button
-              type="button"
-              className="btn btn-lg btn-secondary btn-block"
+            <Button
+              color="primary"
+              variant="contained"
+              className="btn-lg btn-block"
             >
-              Forgot Password
-            </button>
+              Sign in
+            </Button>
           </form>
+          <Button
+            color="secondary"
+            variant="contained"
+            href="/forgot"
+            className="btn-lg btn-block"
+          >
+            Forgot Password
+          </Button>
+          <p className="text-center">
+            Haven't got an account?
+            <em>
+              <a href="/signup"> Sign up</a>
+            </em>
+          </p>
         </div>
       </div>
     </div>

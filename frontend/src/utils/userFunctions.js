@@ -10,6 +10,20 @@ export const registerUser = (userData) => {
   });
 };
 
+export const forgotPassword = (userData) => {
+  return axios.patch("/api/forgot", {
+    email: userData.email,
+  });
+};
+
+export const resetPassword = (userData) => {
+  return axios.patch("/api/reset", {
+    token: userData.token,
+    password: userData.password,
+    confirmPassword: userData.confirmPassword,
+  });
+};
+
 export const loginUser = (userData) => {
   // console.log(userData);
   return axios.post("/api/signin", {
