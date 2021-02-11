@@ -1,28 +1,28 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { forgotPassword } from "../../utils/userFunctions";
+import { resetPassword } from "../../utils/userFunctions";
 import { checkFormFields } from "./checkFormFields";
 
 function Signup(props) {
   const history = useHistory();
 
-  const [registerState, setRegisterState] = useState({
+  const [resetState, setResetState] = useState({
     token: "",
-    password: "",
+    newPassword: "",
     confirmPassword: "",
     errors: {},
     formIsValid: true,
   });
 
   const handleValidation = () => {
-    const [errors, formIsValid] = checkFormFields(registerState);
-    setRegisterState({ ...registerState, errors, formIsValid });
+    const [errors, formIsValid] = checkFormFields(resetState);
+    setResetState({ ...resetState, errors, formIsValid });
   };
 
   const onChange = (event) => {
-    setRegisterState({
-      ...registerState,
-      [event.target.name]: event.target.value,
+    setResetState({
+      ...resetState,
+      [event.target.name]: event.target.value.trim(),
     });
   };
 
@@ -31,29 +31,32 @@ function Signup(props) {
     handleValidation();
     event.preventDefault();
     const userData = {
-      email: registerState.email,
+      token: resetState.token,
+      newPassword: resetState.newPassword,
+      confirmPassword: resetState.confirmPassword,
     };
-    if (registerState.formIsValid) {
+    if (resetState.formIsValid) {
       try {
         console.log(userData);
-        const res = await forgotPassword(userData);
+        const res = await resetPassword(userData);
         console.log(res.data);
         if (res.data.error) {
           errors["message"] = `${res.data.message}`;
         } else {
           console.log("Password Reset");
           setTimeout(() => {
-            history.push("/reset");
+            history.push("/signin");
           }, 2500);
         }
       } catch (error) {
         errors["message"] =
           "You should be able to reset if you have the reset code for the correct email address";
-        setRegisterState({ ...registerState, errors });
+        setResetState({ ...resetState, errors });
       }
     } else {
       console.log("Form has errors.");
       errors["message"] = "Error with either code or unmatched passwords";
+      setResetState({ ...resetState, errors });
     }
   };
 
@@ -66,37 +69,33 @@ function Signup(props) {
               Reset your password - don't forget the reset token sent to the
               email provided.
             </h1>
-            <span style={{ color: "red" }}>
-              {registerState.errors["message"]}
-            </span>
+            <span style={{ color: "red" }}>{resetState.errors["message"]}</span>
             <div className="form-group">
-              <label htmlFor="reset">Reset Token</label>
+              <label htmlFor="token">Reset token</label>
               <input
                 type="text"
-                refs="reset"
+                refs="token"
                 className="form-control"
-                name="reset"
-                placeholder="Enter reset token"
-                value={registerState.token}
+                name="token"
+                placeholder="Enter token sent to your email (eg: 123456)"
+                value={resetState.token}
                 onChange={onChange}
               />
-              <span style={{ color: "red" }}>
-                {registerState.token["token"]}
-              </span>
             </div>
+            <span style={{ color: "red" }}>{resetState.token["token"]}</span>
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="newPassword">New Password</label>
               <input
                 type="password"
-                refs="password"
+                refs="newPassword"
                 className="form-control"
-                name="password"
-                placeholder="Enter Password"
-                value={registerState.password}
+                name="newPassword"
+                placeholder="Enter new password"
+                value={resetState.newPassword}
                 onChange={onChange}
               />
               <span style={{ color: "red" }}>
-                {registerState.errors["password"]}
+                {resetState.errors["password"]}
               </span>
             </div>
             <div className="form-group">
@@ -106,12 +105,12 @@ function Signup(props) {
                 refs="confirmPassword"
                 className="form-control"
                 name="confirmPassword"
-                placeholder="Confirm your password"
-                value={registerState.confirmPassword}
+                placeholder="Confirm your new password"
+                value={resetState.confirmPassword}
                 onChange={onChange}
               />
               <span style={{ color: "red" }}>
-                {registerState.errors["confirmPassword"]}
+                {resetState.errors["confirmPassword"]}
               </span>
             </div>
             <button type="submit" className="btn btn-lg btn-primary btn-block">

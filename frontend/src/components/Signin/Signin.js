@@ -16,7 +16,7 @@ function Signin() {
     errors: {},
   });
 
-  const [, appDispatch] = useAppContext();
+  const [appState, appDispatch] = useAppContext();
 
   const onChange = (e) => {
     setFormState({
@@ -26,6 +26,7 @@ function Signin() {
   };
 
   const handleSubmit = async (e) => {
+    let errors = {};
     e.preventDefault();
     const user = {
       email: formState.email,
@@ -33,10 +34,12 @@ function Signin() {
     };
     try {
       const response = await loginUser(user);
-      console.log("response log ", response);
+      // if (response.error)
+      // console.log("response log ", response);
 
       // Set token to localStorage
       const token = response.data.accessToken;
+
       console.log("Token from response", token);
       // Set token to Auth header
       setAuthToken(token);
@@ -44,15 +47,26 @@ function Signin() {
       const decodedToken = jwt_decode(token);
       console.log("decoded", decodedToken);
       // Set current user
-      appDispatch({ type: SET_CURRENT_USER, payload: decodedToken });
+      await appDispatch({ type: SET_CURRENT_USER, payload: decodedToken });
+      errors["success"] = "Success! Redirecting...";
+      setFormState({ ...formState, errors });
+
       setTimeout(() => {
         history.push("/home");
       }, 2000);
     } catch (error) {
+      errors["failure"] = error.response.data.message;
+      setFormState({ ...formState, errors });
+      // console.log(error);
+      // console.log(appState);
       appDispatch({
         type: GET_ERRORS,
         payload: error,
       });
+
+      // return error ? console.log(error) : "";
+      // console.log(appState);
+      // console.log(appState.errors);
     }
   };
 
@@ -62,6 +76,7 @@ function Signin() {
         <div className="mx-auto mt-5 col-md-6">
           <form noValidate onSubmit={handleSubmit}>
             <h1 className="mb-3 h3 font-weight normal">Please Sign in</h1>
+
             <div className="form-group">
               <label htmlFor="email">Email Address</label>
               <input
@@ -84,6 +99,7 @@ function Signin() {
                 onChange={onChange}
               />
             </div>
+            <span style={{ color: "red" }}>{formState.errors["failure"]}</span>
             <button type="submit" className="btn btn-lg btn-primary btn-block">
               Sign in
             </button>

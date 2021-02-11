@@ -46,7 +46,11 @@ function Signup(props) {
           errors["failure"] = `${res.data.message}`;
         } else {
           console.log("Form submitted");
-          history.push("/activate");
+          errors["failure"] = "Success! Redirecting...";
+          setRegisterState({ ...registerState, errors });
+          setTimeout(() => {
+            history.push("/activate");
+          });
         }
       } catch (error) {
         errors["email"] = "Email already exists";
@@ -55,6 +59,7 @@ function Signup(props) {
     } else {
       console.log("Form has errors.");
       errors["failure"] = "Error signing up";
+      setRegisterState({ ...registerState, errors });
     }
   };
 
