@@ -39,7 +39,7 @@ function App() {
             <Route exact path="/activate" component={Activate} />
             {/* <Route exact path="/reset" component={Reset} /> */}
             <Route exact path="/forgot" component={Forgot} />
-            {/* <Route exact path="/other" component={Auth(Dashboard)} /> */}
+            <Route exact path="/home" component={Auth(Home)} />
             {/* <Route exact path="/startUp" component={StartUp} /> */}
           </div>
         </div>

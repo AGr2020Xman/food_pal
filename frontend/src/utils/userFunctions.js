@@ -33,7 +33,14 @@ export const loginUser = (userData) => {
 };
 
 export const activateUser = (userData) => {
-  return axios.post("/api/activate", userData);
+  return axios.patch("/api/activate", {
+    code: userData.code,
+    email: userData.email,
+  });
+};
+
+export const signoutUser = (userData) => {
+  return axios.get("/api/signout", {});
 };
 
 export const getUsers = () => {

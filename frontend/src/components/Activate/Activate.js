@@ -42,7 +42,10 @@ function Activate() {
           errors["failure"] = `${res.data.message}`;
         } else {
           console.log("Form submitted");
-          history.push("/signin");
+          setTimeout(() => {
+            errors["success"] = "Success! Redirecting to sign in page";
+            history.push("/signin");
+          }, 3000);
         }
       } catch (error) {
         errors["failure"] =
@@ -65,6 +68,10 @@ function Activate() {
               Please activate your account
             </h1>
             <span style={{ color: "red" }}>{formState.errors["failure"]}</span>
+            <span style={{ color: "green" }}>
+              {formState.errors["success"]}
+            </span>
+
             <div className="form-group">
               <label htmlFor="code">Activation Code</label>
               <input

@@ -98,6 +98,17 @@ const Navbar = () => {
           Sign out
         </Button>
       </li>
+      <li>
+        <button
+          className="btn btn-sm active"
+          id="logoutBtn"
+          data-toggle="modal"
+          data-target="#logoutModal"
+          onClick={handleLogOut}
+        >
+          <div>Logout</div>
+        </button>
+      </li>
     </ul>
   );
 

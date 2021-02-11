@@ -42,7 +42,7 @@ function Signin() {
       const decodedToken = jwt_decode(token);
       // Set current user
       appDispatch({ type: SET_CURRENT_USER, payload: decodedToken });
-      history.push("/dashboard");
+      history.push("/Home");
     } catch (error) {
       appDispatch({
         type: GET_ERRORS,
@@ -79,13 +79,9 @@ function Signin() {
                 onChange={onChange}
               />
             </div>
-            <Button
-              color="primary"
-              variant="contained"
-              className="btn-lg btn-block"
-            >
+            <button type="submit" className="btn btn-lg btn-primary btn-block">
               Sign in
-            </Button>
+            </button>
           </form>
           <Button
             color="secondary"
