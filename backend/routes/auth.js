@@ -7,6 +7,7 @@ const {
   forgotPassword,
   resetPassword,
   signout,
+  getUser,
   getUsers,
 } = require("../controllers/auth");
 const cleanBody = require("../controllers/middlewares/cleanbody.js");
@@ -22,38 +23,8 @@ router.get("/secret", validateToken, (req, res) => {
   res.status(200).json({ message: "the password is potato" });
   console.log(req);
 });
-router.get("/profile", (req, res) => {
-  var decoded = jwt.verify(
-    req.headers["authorization"],
-    process.env.SECRET_KEY
-  );
-  User.findOne({
-    _id: decoded._id,
-  })
-    .then((response) => {
-      if (response) {
-        res.json(response);
-      } else {
-        res.status(400).json({ error: "User does not exist" });
-      }
-    })
-    .catch((err) => {
-      res.send("error: " + err);
-    });
-});
+router.get("/profile", getUser);
 
-router.get("/allusers", (req, res) => {
-  User.find()
-    .then((response) => {
-      if (response) {
-        res.json(response);
-      } else {
-        res.status(400).json({ error: "Users do not exist" });
-      }
-    })
-    .catch((err) => {
-      res.send("error: " + err);
-    });
-});
+router.get("/allusers", getUsers);
 
 module.exports = router;
