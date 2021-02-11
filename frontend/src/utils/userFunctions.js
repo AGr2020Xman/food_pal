@@ -16,11 +16,11 @@ export const forgotPassword = (userData) => {
   });
 };
 
-export const resetPassword = (userData) => {
+export const resetPassword = ({ token, newPassword, confirmPassword }) => {
   return axios.patch("/api/reset", {
-    token: userData.token,
-    password: userData.password,
-    confirmPassword: userData.confirmPassword,
+    token: token,
+    newPassword: newPassword,
+    confirmPassword: confirmPassword,
   });
 };
 
