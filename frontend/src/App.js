@@ -14,14 +14,15 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import Hero from "./components/Hero/Hero";
 import "./App.css";
-
+import Landing from "./components/Landing/Landing";
 import Signup from "./components/Signup/Signup";
 import Signin from "./components/Signin/Signin";
 import Forgot from "./components/Forgot/Forgot";
 import Reset from "./components/Reset/Reset";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppContextProvider } from "./store";
-import Auth from "./Auth";
+import PrivateRoute from "./Auth";
+import { ToastContainer, toast } from "react-toastify";
 
 import "./App.css";
 import Activate from "./components/Activate/Activate";
@@ -30,16 +31,29 @@ function App() {
   return (
     <AppContextProvider>
       <Router>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div className="pl-0 pr-0 m-0 container-fluid">
           <Navbar />
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Landing} />
           <div className="p-0 m-0 container-fluid">
             <Route exact path="/signin" component={Signin} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/activate" component={Activate} />
-            {/* <Route exact path="/reset" component={Reset} /> */}
+            <Route exact path="/reset" component={Reset} />
             <Route exact path="/forgot" component={Forgot} />
-            <Route exact path="/home" component={Auth(Home)} />
+            {/* <Route exact path="/home" component={Auth(Home)} /> */}
+            <PrivateRoute component={Home} path="/home" exact />
+
             {/* <Route exact path="/startUp" component={StartUp} /> */}
           </div>
         </div>
