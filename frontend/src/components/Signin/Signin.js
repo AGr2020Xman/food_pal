@@ -11,9 +11,9 @@ function Signin() {
   const history = useHistory();
 
   const [formState, setFormState] = useState({
-    name: "",
     email: "",
     password: "",
+    errors: {},
   });
 
   const [, appDispatch] = useAppContext();
@@ -28,21 +28,26 @@ function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = {
-      name: formState.name,
       email: formState.email,
       password: formState.password,
     };
     try {
       const response = await loginUser(user);
+      console.log("response log ", response);
+
       // Set token to localStorage
-      const token = response.accessToken;
+      const token = response.data.accessToken;
+      console.log("Token from response", token);
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data
       const decodedToken = jwt_decode(token);
+      console.log("decoded", decodedToken);
       // Set current user
       appDispatch({ type: SET_CURRENT_USER, payload: decodedToken });
-      history.push("/Home");
+      setTimeout(() => {
+        history.push("/home");
+      }, 2000);
     } catch (error) {
       appDispatch({
         type: GET_ERRORS,

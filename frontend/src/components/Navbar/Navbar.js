@@ -47,8 +47,11 @@ const Navbar = () => {
 
   const handleLogOut = (e) => {
     e.preventDefault();
+    console.log("dispatch in handleLogout", dispatch);
     setUserLogout(dispatch);
-    history.push("/");
+    setTimeout(() => {
+      history.push("/");
+    }, 2500);
   };
 
   console.log({ state });

@@ -7,7 +7,7 @@ const AuthRoute = ({ render, ...routeProps }) => {
   return (
     <Route
       {...routeProps}
-      render={() => (authenticated ? render() : <Redirect to="/login" />)}
+      render={() => (authenticated ? render() : <Redirect to="/signin" />)}
     />
   );
 };

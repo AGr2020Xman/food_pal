@@ -87,7 +87,7 @@ function Signup(props) {
             <p className="text-center">
               Remember your password?
               <em>
-                <a href="/login"> Sign in here</a>
+                <a href="/signin"> Sign in here</a>
               </em>
             </p>
           </form>

@@ -25,7 +25,7 @@ export const resetPassword = (userData) => {
 };
 
 export const loginUser = (userData) => {
-  // console.log(userData);
+  console.log("Yoohoo loginUser", userData);
   return axios.post("/api/signin", {
     email: userData.email,
     password: userData.password,

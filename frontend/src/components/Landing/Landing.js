@@ -31,7 +31,7 @@ const Landing = () => {
           </div>
           <div className="col s6">
             <Link
-              to="/login"
+              to="/signin"
               style={{
                 width: "140px",
                 borderRadius: "3px",
