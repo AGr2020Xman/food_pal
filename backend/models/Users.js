@@ -41,12 +41,6 @@ let UserSchema = new Schema(
       type: String,
       default: null,
     },
-    storedFoods: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "storedlist",
-      },
-    ],
   },
   {
     timestamps: {

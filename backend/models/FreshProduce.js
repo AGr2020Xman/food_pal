@@ -7,6 +7,10 @@ let FreshSchema = new Schema({
     type: String,
     required: true,
   },
+  isRaw: {
+    type: Boolean,
+    required: true,
+  },
   canRefrigerate: {
     type: Boolean,
     required: true,
