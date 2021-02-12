@@ -1,20 +1,44 @@
-import FreshProduce from "../models/FreshProduce";
-import Perishables from "../modles/Perishables";
+import Products from "../models/Products";
+import StoredFood from "../models/StoredFood";
+// import Perishables from "../modles/Perishables";
 // const Joi = require("joi");
 // const { v4: uuid } = require("uuid");
 // const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 exports.getFood = async (req, res) => {
   try {
-    const freshFood = await FreshProduce.find();
-    const perishFood = await Perishables.find();
+    const products = await Products.find(); // returns arr of obj
 
-    freshFood;
-    return res.send({});
-  } catch (err) {}
+    return res.status(200).json(products);
+  } catch (err) {
+    console.log(err);
+  }
 };
-exports.addList = async (req, res) => {};
-exports.editList = async (req, res) => {};
+exports.getListItems = async (req, res) => {
+  try {
+    const { _id } = req.decoded;
+    const listItems = await StoredFood.find({ owner: _id });
+    return res.status(200).json(listItems)
+  } catch (err) {
+      console.log(err);
+  }
+};
+
+exports.createListItems = async (req, res) => {
+    try {
+        const bulk = 
+
+    } catch (err) {
+        console.log(err);
+    }
+};
+router.put("/listitems/:id", validateToken, updateItems)
+router.delete("/listitems/:id", validateToken, deleteItems)
+
+
+router.delete("/removelist", validateToken, removeList);
+
+exports.createListItems = async (req, res) => {};
 exports.addFreshFood = async (req, res) => {};
 exports.addPerishableFood = async (req, res) => {};
 exports.updateFresh = async (req, res) => {};
@@ -23,7 +47,7 @@ exports.removeList = async (req, res) => {};
 
 exports.addFreshFood = async (req, res) => {
   try {
-    const freshFood = await FreshProduce.findOne({ name: req.body.name });
+    const freshFood = await Products.findOne({ name: req.body.name });
 
     if (freshFood) {
       return res.status(422).json({

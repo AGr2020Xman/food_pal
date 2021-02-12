@@ -74,6 +74,7 @@ exports.signin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    console.log("from inisde signin route", req.body);
     if (!email || !password) {
       return res.status(400).json({
         error: true,
@@ -126,7 +127,7 @@ exports.signin = async (req, res) => {
     user.accessToken = token;
 
     await user.save();
-
+    console.log("sending back to server", token);
     //Success
     return res.send({
       success: true,

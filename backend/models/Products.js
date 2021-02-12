@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-let FreshSchema = new Schema({
+let Products = new Schema({
   name: {
     type: String,
     required: true,
   },
-  isRaw: {
+  isFresh: {
     type: Boolean,
     required: true,
   },
@@ -20,18 +20,20 @@ let FreshSchema = new Schema({
     required: true,
   },
   standardExpiry: {
-    type: Number,
-    required: true,
+    type: String,
+    required: false,
   },
   fridgeExpiry: {
-    type: Number,
+    type: String,
     required: false,
+    default: "1-2 weeks",
   },
   freezerExpiry: {
-    type: Number,
+    type: String,
     required: false,
+    default: "2-3 months",
   },
 });
 
-const FreshProduce = mongoose.model("freshfood", FreshSchema);
-module.exports = FreshProduce;
+const Products = mongoose.model("foods", Products);
+module.exports = Products;
