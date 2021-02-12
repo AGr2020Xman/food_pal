@@ -1,4 +1,3 @@
-const 
 import Products from "../models/Products";
 import StoredFood from "../models/StoredFood";
 // import Perishables from "../modles/Perishables";
@@ -10,7 +9,7 @@ exports.getFood = async (req, res) => {
   try {
     const products = await Products.find(); // returns arr of obj
 
-    return res.status(200).json(products);
+    return res.status(200).json({products});
   } catch (err) {
     console.log(err);
   }
@@ -18,8 +17,8 @@ exports.getFood = async (req, res) => {
 exports.getListItems = async (req, res) => {
   try {
     const { _id } = req.decoded;
-    const listItems = await StoredFood.find({ owner: _id });
-    return res.status(200).json(listItems)
+    const listItems = await StoredFood.find({ owner: _id })// may need to filter query down to also find just the name of the list it belongs to
+    return res.status(200).json({listItems})
   } catch (err) {
       console.log(err);
   }
@@ -27,12 +26,35 @@ exports.getListItems = async (req, res) => {
 
 exports.createListItems = async (req, res) => {
     try {
-        const bulk = 
+        const bulk = req.body
+        StoredFood.insertMany(bulk).then(() => {
+          console.log('Success');
+          return res.status(200).json({
+            success: true,
+            message: 'List items saved'
+          })
+        })
 
     } catch (err) {
         console.log(err);
+        res.status(400).json({
+          error: true,
+          message: err
+        })
     }
 };
+
+exports.updateItems = async (req, res) => {
+  try {
+
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      error: true,
+      message: err
+    })
+  }
+}
 router.put("/listitems/:id", validateToken, updateItems)
 router.delete("/listitems/:id", validateToken, deleteItems)
 

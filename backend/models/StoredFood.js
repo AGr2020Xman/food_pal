@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 //   if (!models || !models.length) {
 //     return fn(null)
 //   }
-
+// name (list name), owner (from req.decoded._id), 
 //   const bulk = this.
 // }
 let ListItemSchema = new Schema(
@@ -14,13 +14,13 @@ let ListItemSchema = new Schema(
       type: String,
       required: true,
     },
-    owner: {
-      type: Schema.Types.ObjectId,
-      ref: "users",
+    ownerId: {
+      type: String,
+      ref: 'users',
     },
-    foodType: {
+    foodDetails: {
       type: Schema.Types.ObjectId,
-      ref: "foods",
+      ref: "foods", // food details from foods model
     },
     isOpen: {
       type: Boolean,

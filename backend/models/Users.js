@@ -41,6 +41,10 @@ let UserSchema = new Schema(
       type: String,
       default: null,
     },
+    listItems: [{
+      type: Schema.Types.ObjectId,
+      refs: 'storedlistitem'
+    }]
   },
   {
     timestamps: {
