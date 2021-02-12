@@ -50,7 +50,7 @@ const validateToken = async (req, res, next) => {
     if (err.name === "TokenExpiredError") {
       result = {
         error: true,
-        message: `TokenExpired`,
+        message: `Token Expired`,
       };
     } else {
       result = {
