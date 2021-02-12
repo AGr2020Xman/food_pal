@@ -5,13 +5,13 @@ const options = {
   expiresIn: 600000,
 };
 
-const createJWT = async (email, userId, name, storedFoods) => {
+const createJWT = async (email, userId, name, _id) => {
   try {
     const payload = {
+      id: _id,
       email: email,
-      id: userId,
       name: name,
-      storedFoods: storedFoods,
+      userId: userId,
     };
     const token = await jwt.sign(payload, process.env.JWT_SECRET, options);
     return { error: false, token: token };

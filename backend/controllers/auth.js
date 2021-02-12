@@ -112,10 +112,10 @@ exports.signin = async (req, res) => {
 
     //4. Generate Access token
     const { error, token } = await createJWT(
+      user._id,
       user.email,
-      user.userId,
       user.name,
-      user.storedFoods
+      user.userId
     );
     if (error) {
       return res.status(500).json({
