@@ -35,11 +35,9 @@ export const checkFormFields = ({ email, name, password, confirmPassword }) => {
 
   // confirm password
   if (!confirmPassword) {
-    console.log("1,", confirmPassword);
     formIsValid = false;
     errors["confirmPassword"] = "Cannot be empty";
   } else if (confirmPassword !== password) {
-    console.log("2,", confirmPassword);
     formIsValid = false;
     errors["confirmPassword"] = "Must match password";
   }

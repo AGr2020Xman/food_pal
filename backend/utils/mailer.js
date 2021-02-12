@@ -15,7 +15,7 @@ async function sendEmail(email, code) {
 
     const smtpPassword = process.env.SG_APIKEY;
 
-    const subject = "Verify your email || Foodpal";
+    const subject = "Verification || Foodpal support";
 
     // The body of the email for recipients
     const body_html = `<!DOCTYPE> 

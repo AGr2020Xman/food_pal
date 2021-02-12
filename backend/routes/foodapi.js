@@ -5,13 +5,12 @@ const {} = require("../controllers/auth");
 const { validateToken } = require("../controllers/middlewares/validateToken");
 
 router.get("getfoods", validateToken, getFood);
-router.get("/storedlist", validateToken, getList);
-router.post("/addlist", validateToken, addList);
-router.patch("/editlist", validateToken, editList);
-router.post("/addfresh", validateToken, addFreshFood);
-router.post("/addperish", validateToken, addPerishableFood);
-router.patch("/updatefresh", validateToken, activate);
-router.patch("/updateperish", validateToken, forgotPassword);
+
+router.get("/listitems", validateToken, getListItems);
+router.post("/listitems", validateToken, createListItems);
+router.put("/listitems/:id", validateToken, updateItems);
+router.delete("/listitems/:id", validateToken, deleteItems);
+
 router.delete("/removelist", validateToken, removeList);
 
 module.exports = router;
