@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-let Products = new Schema({
+let ProductSchema = new Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   isFresh: {
     type: Boolean,
@@ -35,5 +36,5 @@ let Products = new Schema({
   },
 });
 
-const Products = mongoose.model("foods", Products);
+const Products = mongoose.model("foods", ProductSchema);
 module.exports = Products;
