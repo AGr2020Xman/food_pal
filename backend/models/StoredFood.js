@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 //   if (!models || !models.length) {
 //     return fn(null)
 //   }
-// name (list name), owner (from req.decoded._id), 
+// name (list name), owner (from req.decoded._id),
 //   const bulk = this.
 // }
 let ListItemSchema = new Schema(
@@ -14,9 +14,14 @@ let ListItemSchema = new Schema(
       type: String,
       required: true,
     },
+    existsId: {
+      type: String,
+      unique: true,
+      required: true,
+    },
     ownerId: {
       type: String,
-      ref: 'users',
+      ref: "users",
     },
     foodDetails: {
       type: Schema.Types.ObjectId,
