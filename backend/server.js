@@ -7,6 +7,7 @@ require("dotenv").config();
 
 // routes
 const authRoutes = require("./routes/auth");
+const foodRoutes = require("./routes/foodapi");
 const { db } = require("./models/Users");
 
 const app = express();
@@ -37,6 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 app.use("/api", authRoutes);
+app.use("/api", foodRoutes);
 
 app.get("/ping", (req, res) => {
   return res.send({
