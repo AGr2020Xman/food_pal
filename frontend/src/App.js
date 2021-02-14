@@ -12,7 +12,7 @@ import FoodList from "./components/FoodList/FoodList";
 import Navbar from "./components/Navbar/Navbar";
 // import Landing from "./components/Landing/Landing";
 import Home from "./components/Home/Home";
-import Hero from "./components/Hero/Hero";
+import StoredFoodDash from "./components/StoreFoodDash/StoreFoodDash";
 import "./App.css";
 import Landing from "./components/Landing/Landing";
 import Signup from "./components/Signup/Signup";
@@ -51,10 +51,12 @@ function App() {
             <Route exact path="/activate" component={Activate} />
             <Route exact path="/reset" component={Reset} />
             <Route exact path="/forgot" component={Forgot} />
-            {/* <Route exact path="/home" component={Auth(Home)} /> */}
             <PrivateRoute component={Home} path="/home" exact />
-
-            {/* <Route exact path="/startUp" component={StartUp} /> */}
+            <PrivateRoute
+              component={StoredFoodDash}
+              path="/foodpal_list"
+              exact
+            />
           </div>
         </div>
       </Router>
