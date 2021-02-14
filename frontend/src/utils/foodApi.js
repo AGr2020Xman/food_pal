@@ -1,33 +1,47 @@
 import axios from "axios";
-
+//
 export const getFood = () => {
-    return axios.get("");
-  };
-
-export const registerUser = (userData) => {
-  // console.log(userData);
-  return axios.post("/api/signup", {
-    name: userData.name,
-    email: userData.email,
-    password: userData.password,
-    confirmPassword: userData.confirmPassword,
-  });
+  return axios.get("/api/getfood");
 };
 
-export const signoutUser = () => {
-  return axios.get("/api/signout");
+export const getListItems = () => {
+  return axios.get("/api/listitems");
+};
+
+export const createListItems = (listData) => {
+  return axios.post("/api/listitems", {
+    name: listData.name,
+    existsId: listData.existsId,
+    ownerId: listData.ownerId,
+    // foodDetails: listData.foodDetails, .populate('food', '''')
+    isOpen: listData.isOpen,
+    expiryDate: listData.expiryDate,
+    quantity: listData.quantity,
+    inFridge: listData.inFridge,
+    inFreezer: listData.inFreezer,
+  });
 }; // from auth local storage
 
-export const forgotPassword = (userData) => {
-  return axios.patch("/api/forgot", {
-    email: userData.email,
-  });
+export const updateItems = (listUpdateArray) => {
+  return axios.patch("/api/listitems", listUpdateArray);
 };
 
-export const resetPassword = ({ token, newPassword, confirmPassword }) => {
-  return axios.patch("/api/reset", {
-    token: token,
-    newPassword: newPassword,
-    confirmPassword: confirmPassword,
+export const deleteItem = (config) => {
+  return axios.delete("/api/listitems/", config);
+};
+
+export const deleteAll = (config) => {
+  return axios.delete("/api/listitems/", config); //req.decoded required for _id
+};
+
+export const addFood = (payload) => {
+  return axios.post("/api/food", {
+    name: payload.name,
+    isFresh: payload.isFresh,
+    canRefrigerate: payload.canRefrigerate,
+    canFreeze: payload.canFreeze,
+    standardExpiry: payload.standardExpiry,
+    fridgeExpiry: payload.fridgeExpiry,
+    freezerExpiry: payload.freezerExpiry,
   });
 };
