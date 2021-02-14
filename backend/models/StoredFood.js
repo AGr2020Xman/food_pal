@@ -30,6 +30,7 @@ let ListItemSchema = new Schema(
     isOpen: {
       type: Boolean,
       required: true,
+      default: false,
     },
     expiryDate: {
       type: Date,
