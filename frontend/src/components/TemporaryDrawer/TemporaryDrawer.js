@@ -9,8 +9,17 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import HomeIcon from "@material-ui/icons/Home";
+import CreateNewFolderIcon from "@material-ui/icons/CreateNewFolder";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+
 import MenuIcon from "@material-ui/icons/Menu";
+import { Link, useHistory } from "react-router-dom";
+import { Menu } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
+import { useAppContext } from "../../store";
 
 const useStyles = makeStyles({
   list: {
@@ -23,13 +32,14 @@ const useStyles = makeStyles({
 
 export default function TemporaryDrawer() {
   const classes = useStyles();
+  const history = useHistory();
   const [state, setState] = useState({
-    top: false,
+    // top: false,
     left: false,
-    bottom: false,
-    right: false,
+    // bottom: false,
+    // right: false,
   });
-
+  const [authState, dispatch] = useAppContext();
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -37,9 +47,67 @@ export default function TemporaryDrawer() {
     ) {
       return;
     }
-
-    setState({ ...state, [anchor]: open });
+    setState({ [anchor]: open });
   };
+
+  const locationList1 = [
+    { text: "Home", icon: <HomeIcon />, onClick: () => history.push("/") },
+    {
+      text: "Sign in",
+      icon: <LockOpenIcon />,
+      onClick: () => history.push("/signin"),
+    },
+    {
+      text: "Sign up",
+      icon: <VpnKeyIcon />,
+      onClick: () => history.push("/signup"),
+    },
+    {
+      text: "My lists",
+      icon: <CreateNewFolderIcon />,
+      onClick: () => history.push("/foodpal_list"),
+    },
+  ];
+  const noAuth = (
+    <List>
+      {locationList1.map((item, index) => {
+        const { text, icon, onClick } = item;
+
+        return (
+          <ListItem button key={text} onClick={onClick}>
+            {icon && <ListItemIcon>{icon}</ListItemIcon>}
+            <ListItemText primary={`${text}`} />
+          </ListItem>
+        );
+      })}
+    </List>
+  );
+
+  const locationList2 = [
+    {
+      text: "Dashboard",
+      icon: <HomeIcon />,
+      onClick: () => history.push("/home"),
+    },
+    {
+      text: "My lists",
+      icon: <ExitToAppIcon />,
+      onClick: () => history.push("/foodpal_list"),
+    },
+  ];
+  const authed = (
+    <List>
+      {locationList2.map((item, index) => {
+        const { text, icon, onClick } = item;
+        return (
+          <ListItem button key={text} onClick={onClick}>
+            {icon && <ListItemIcon>{icon}</ListItemIcon>}
+            <ListItemText primary={`${text}`} />
+          </ListItem>
+        );
+      })}
+    </List>
+  );
 
   const list = (anchor) => (
     <div
@@ -50,27 +118,7 @@ export default function TemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        {["Account", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+      {authState.isAuthenticated ? authed : noAuth}
     </div>
   );
 
@@ -78,7 +126,9 @@ export default function TemporaryDrawer() {
     <div>
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <MenuIcon onClick={toggleDrawer(anchor, true)} />
+          <IconButton edge="start" onClick={toggleDrawer(anchor, true)}>
+            <MenuIcon color="inherit" />
+          </IconButton>
           <Drawer
             anchor={anchor}
             open={state[anchor]}
