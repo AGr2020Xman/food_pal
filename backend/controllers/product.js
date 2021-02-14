@@ -1,7 +1,5 @@
 const Products = require("../models/Products");
 const StoredFood = require("../models/StoredFood");
-// import Perishables from "../modles/Perishables";
-// const Joi = require("joi");
 // const { v4: uuid } = require("uuid");
 // const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
