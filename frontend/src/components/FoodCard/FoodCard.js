@@ -11,14 +11,15 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import dateFormat from "dateformat";
 import Divider from "@material-ui/core/Divider";
+import "./FoodCard.css";
 const { v4: uuid } = require("uuid");
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: 450,
   },
   media: {
-    height: 140,
+    height: 260,
   },
 });
 
@@ -68,7 +69,6 @@ const FoodCard = (props) => {
     inFridge: false,
     inFreezer: false,
   };
-  console.log(item);
   const fridgeExpiryView = (fridgeExpiry) => {
     return (
       <ListItem>
@@ -88,7 +88,7 @@ const FoodCard = (props) => {
   };
 
   return (
-    <Card className={classes.root} key={props.food._id}>
+    <Card className={`${classes.root}`} key={props.food._id}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
           {props.food.name}
@@ -101,9 +101,9 @@ const FoodCard = (props) => {
         <table>
           <thead>
             <tr>
-              <th>Standard shelf life</th>
-              <th>Safe to refrigerate</th>
-              <th>Safe to freeze</th>
+              <th className="fit">Standard shelf life</th>
+              <th className="fit">Safe to refrigerate</th>
+              <th className="fit">Safe to freeze</th>
             </tr>
           </thead>
           <tbody>

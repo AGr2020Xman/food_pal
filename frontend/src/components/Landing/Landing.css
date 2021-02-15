@@ -1,5 +1,5 @@
 .landing {
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1483378096604-1294ca36d0f3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
     height: 550px;
     background-position: center;
     background-repeat: no-repeat;
@@ -10,4 +10,12 @@
     align-items: center;
     color: white;
     font-size: 52px;
+  }
+
+  .food-facts {
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    border: 2px black solid;
+    text-align: center;
   }

@@ -1,9 +1,16 @@
 import React from "react";
+import Divider from "@material-ui/core/Divider";
 
 const Home = () => {
   return (
-    <div className="hero">
-      <h1>Home Page</h1>
+    <div>
+      <div className="hero">
+        <div>FoodPal Landing</div>
+      </div>
+      <Divider />
+      <div>
+        <h3 className="food-facts">Stay tuned for food facts...</h3>
+      </div>
     </div>
   );
 };

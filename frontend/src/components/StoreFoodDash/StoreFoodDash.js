@@ -10,6 +10,9 @@ import List from "../listComps/List";
 
 import { getFood, getListItems } from "../../utils/foodApi";
 
+import "./Fix.css";
+import { Divider } from "@material-ui/core";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     margin: theme.spacing(3),
@@ -63,15 +66,16 @@ const StoredFoodDash = () => {
 
   // [{}]
 
-  const addListItem = (item) => {
+  const addListItem = async (item) => {
     // take e.target.id
-    setList([...listItems, item]);
+    await setList([...listItems, item]);
+    console.log("listItems", listItems);
     // [...listItems]
     // food -> [{},...]
   };
 
   return (
-    <div>
+    <div className="fixsize">
       <Container className={classes.container}>
         <Typography variant="h6" gutterBottom>
           Find and track your foods
@@ -88,7 +92,7 @@ const StoredFoodDash = () => {
       <Container className={classes.container}>
         <Grid container spacing={3}>
           {filteredProducts.map((food) => {
-            console.log("in map", food);
+            // console.log("in map", food);
             return (
               <Grid item xs={6} sm={3} key={food._id}>
                 <FoodCard addListItem={addListItem} food={food} />
@@ -96,6 +100,7 @@ const StoredFoodDash = () => {
             );
           })}
         </Grid>
+        <Divider />
         <Grid container>
           <Grid item>
             <List listItems={listItems} />
