@@ -9,7 +9,7 @@ export const getListItems = async (config) => {
 };
 
 export const createListItems = async (listData) => {
-  return axios.post("/api/listitems", { ...listData });
+  return axios.post("/api/listitems", { listData });
 }; // from auth local storage
 
 export const updateItems = async (listUpdateArray) => {

@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
-import React, { useState, useRef } from "react";
-import Editable from "../Editable/Editable";
+import React, { useState, useEffect } from "react";
+// import Editable from "../Editable/Editable";
 import { createListItems, deleteItem, deleteAll } from "../../utils/foodApi";
 import { Button } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
@@ -8,16 +8,21 @@ import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 
 const List = (props) => {
-  const inputRef = useRef();
-  //   const textareaRef = useRef();
+  // console.log("props", props.listItems);
 
-  const [stateList, setListState] = useState([...props.listItems]);
+  const [stateList, setListState] = useState([]);
+  useEffect(() => {
+    const settingList = async () => {
+      await setListState([...props.listItems]);
+    };
+    settingList();
+  }, [props.listItems]);
 
   const saveList = () => {
     createListItems(stateList);
   };
 
-  const deleteByItem = async (event) => {
+  const deleteByItem = async (event, existsId) => {
     const token = localStorage.getItem("userToken");
     let config = {
       headers: {
@@ -25,7 +30,7 @@ const List = (props) => {
       },
       data: {
         //! Take note of the `data` keyword. This is the request body.
-        existsId: event.target.existsId,
+        existsId: existsId,
       },
     };
     await deleteItem(config)
@@ -40,9 +45,18 @@ const List = (props) => {
       });
   };
 
-  const deleteRow = (btn) => {
-    const row = btn.parentNode.parentNode;
-    row.parentNode.removeChild(row);
+  const deleteRow = (existsId) => {
+    const listItems = [...stateList];
+    listItems.splice(existsId, 1);
+    setListState([...listItems]);
+  };
+
+  const updateInput = (e, existsId) => {
+    const listItems = [...stateList];
+    const change = [...listItems.splice(existsId, 1)];
+    change[0].quantity = e.target.value;
+    listItems.push(change);
+    setListState([...listItems]);
   };
 
   return (
@@ -80,7 +94,7 @@ const List = (props) => {
           {stateList.map((item) => {
             return (
               <tr key={item.existsId}>
-                <td contenteditable value={item.name}>
+                <td contentEditable value={item.name} onChange={() => {}}>
                   {item.name}
                 </td>
                 <td>{item.isOpen ? <CheckIcon /> : <CloseIcon />}</td>
@@ -91,15 +105,24 @@ const List = (props) => {
                     name="quantity"
                     min="1"
                     max="100"
+                    value={item.quantity}
+                    onChange={(e) => {
+                      // changeQuantity(item.existsId);
+                      updateInput(e, item.existsId);
+                    }}
                   ></input>
                 </td>
-                <td value={item.inFridge}>{item.inFridge}</td>
-                <td value={item.inFreezer}>{item.inFreezer}</td>
+                <td value={item.inFridge}>
+                  {item.inFridge ? "True" : "False"}
+                </td>
+                <td value={item.inFreezer} onClick={() => {}}>
+                  {item.inFreezer ? "True" : "False"}
+                </td>
                 <td>
                   <Button
                     onClick={() => {
                       deleteByItem(item.existsId);
-                      deleteRow(this);
+                      deleteRow(item.existsId);
                     }}
                   >
                     <DeleteForeverIcon />

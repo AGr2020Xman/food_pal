@@ -312,7 +312,7 @@ exports.resetPassword = async (req, res) => {
 exports.getUser = (req, res) => {
   const decoded = jwt.verify(
     req.headers["authorization"],
-    process.env.SECRET_KEY
+    process.env.JWT_SECRET
   );
   User.findOne({
     _id: decoded._id,

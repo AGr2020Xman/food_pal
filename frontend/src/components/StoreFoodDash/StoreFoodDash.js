@@ -69,7 +69,9 @@ const StoredFoodDash = () => {
   const addListItem = async (item) => {
     // take e.target.id
     await setList([...listItems, item]);
+    // createListItems(listItems);
     console.log("listItems", listItems);
+    console.log(item);
     // [...listItems]
     // food -> [{},...]
   };

@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { forgotPassword } from "../../utils/userFunctions";
 import { checkFormFields } from "./checkFormFields";
 
-function Signup(props) {
+function Forgot(props) {
   const history = useHistory();
 
   const [registerState, setRegisterState] = useState({
@@ -97,4 +97,4 @@ function Signup(props) {
   );
 }
 
-export default Signup;
+export default Forgot;

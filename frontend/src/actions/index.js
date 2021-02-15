@@ -1,7 +1,5 @@
-import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "../utils/setAuthToken";
-import { signoutUser } from "../utils/userFunctions";
 import { SET_CURRENT_USER } from "./types";
 
 export const setUserLogout = async (dispatch) => {

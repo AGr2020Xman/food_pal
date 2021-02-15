@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  NavLink,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import Header from "./components/Header/Header";
 // import Button from "@material-ui/core/Button";
@@ -21,7 +16,7 @@ import Reset from "./components/Reset/Reset";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppContextProvider } from "./store";
 import PrivateRoute from "./Auth";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import "./App.css";
 import Activate from "./components/Activate/Activate";

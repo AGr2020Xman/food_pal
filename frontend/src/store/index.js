@@ -1,6 +1,4 @@
-import React, { createContext, useContext, useEffect, useReducer } from "react";
-import { SET_CURRENT_USER } from "../actions/types";
-import { getUser } from "../utils/userFunctions";
+import React, { createContext, useContext, useReducer } from "react";
 import { appReducer, appInitialState } from "./appStore";
 
 const AppContext = createContext([appInitialState, function dispatch() {}]);

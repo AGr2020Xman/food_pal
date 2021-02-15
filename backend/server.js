@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 // const compression = require("compression");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const path = require("path");
 require("dotenv").config();
 
 // routes
@@ -37,6 +38,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "frontend", "build")));
 app.use("/api", authRoutes);
 app.use("/api", foodRoutes);
 
@@ -45,6 +47,10 @@ app.get("/ping", (req, res) => {
     error: false,
     message: "Server is healthy",
   });
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
 });
 
 app.listen(port, () => {

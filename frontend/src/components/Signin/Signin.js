@@ -6,7 +6,7 @@ import { setAuthToken } from "../../utils/setAuthToken";
 import { useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Button from "@material-ui/core/Button";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 function Signin() {
   const history = useHistory();
@@ -17,7 +17,7 @@ function Signin() {
     errors: {},
   });
 
-  const [appState, appDispatch] = useAppContext();
+  const [, appDispatch] = useAppContext();
 
   const onChange = (e) => {
     setFormState({
