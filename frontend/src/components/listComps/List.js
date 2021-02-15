@@ -137,33 +137,37 @@ const List = (listItems) => {
         </thead>
         <tbody>
           {stateList.map((item) => {
-            <tr key={item.existsId}>
-              <td>{item.name}</td>
-              <td>{item.existsId}</td>
-              <td>{item.isOpen}</td>
-              <td>{item.expiryDate}</td>
-              <td>{item.quantity}</td>
-              <td>{item.inFridge}</td>
-              <td>{item.inFreezer}</td>
-              <td>
-                <Button
-                  onClick={() => {
-                    deleteByItem();
-                    deleteRow(this);
-                  }}
-                >
-                  <DeleteForeverIcon />
-                </Button>
-              </td>
-            </tr>;
+            return (
+              <tr key={item.existsId}>
+                <td>{item.name}</td>
+                <td>{item.existsId}</td>
+                <td>{item.isOpen}</td>
+                <td>{item.expiryDate}</td>
+                <td>{item.quantity}</td>
+                <td>{item.inFridge}</td>
+                <td>{item.inFreezer}</td>
+                <td>
+                  <Button
+                    onClick={() => {
+                      deleteByItem();
+                      deleteRow(this);
+                    }}
+                  >
+                    <DeleteForeverIcon />
+                  </Button>
+                </td>
+              </tr>
+            );
           })}
         </tbody>
         <Button
           onClick={() => {
             deleteAll();
           }}
-        ></Button>
-        <Button onClick={saveList()}></Button>
+        >
+          Delete list
+        </Button>
+        <Button onClick={saveList()}>Save list items</Button>
       </table>
     </div>
   );
