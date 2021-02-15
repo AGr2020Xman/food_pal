@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const StoredFoodDash = () => {
   const config = {
     headers: {
-      Authorization: "Bearer " + localStorage.getItem("userToken"),
+      Authorization: localStorage.getItem("userToken"),
     },
   };
   const [products, setProducts] = useState([]);
@@ -36,8 +36,10 @@ const StoredFoodDash = () => {
   useEffect(() => {
     const populateFood = async () => {
       getFood(config)
-        .then((data) => {
-          setProducts(data);
+        .then((res) => {
+          console.log("DATA INSIDE GETFOOD", res.data);
+          setProducts(res.data.products);
+          console.log("products log", products);
         })
         .catch((err) => console.log(err));
     };
@@ -49,11 +51,13 @@ const StoredFoodDash = () => {
   //   });
 
   useEffect(() => {
-    getListItems(config).then((data) => {
-      setList([...listItems, ...data]);
+    getListItems(config).then((res) => {
+      console.log("DATA INSIDE GETLIST", res.data);
+      setList([...listItems, ...res.data.listArray]);
       console.log("instorefooddash", listItems);
     });
   });
+
   // [{}]
   const addListItem = (item) => {
     // take e.target.id
@@ -79,25 +83,23 @@ const StoredFoodDash = () => {
       </Container>
       <Container className={classes.container}>
         <Grid container spacing={3}>
-          {products.map((food) => {
-            return (
-              <Grid item xs={6} sm={3} key={food._id}>
-                <FoodCard
-                  addListItem={addListItem}
-                  props={
-                    (food._id,
-                    food.name,
-                    food.isFresh,
-                    food.canRefigerate,
-                    food.canFreeze,
-                    food.standardShelfLife,
-                    food.fridgeExpiry,
-                    food.freezeExpiry)
-                  }
-                />
-              </Grid>
-            );
-          })}
+          {products?.map((food) => (
+            <Grid item xs={6} sm={3} key={food._id}>
+              <FoodCard
+                addListItem={addListItem}
+                props={
+                  (food._id,
+                  food.name,
+                  food.isFresh,
+                  food.canRefigerate,
+                  food.canFreeze,
+                  food.standardShelfLife,
+                  food.fridgeExpiry,
+                  food.freezeExpiry)
+                }
+              />
+            </Grid>
+          ))}
         </Grid>
         <Grid container>
           <Grid item>

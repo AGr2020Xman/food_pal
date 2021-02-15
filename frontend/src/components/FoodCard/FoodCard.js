@@ -22,8 +22,13 @@ const useStyles = makeStyles({
 });
 
 const getFormattedDate = (standardShelfLife) => {
+  const addDays = (days, date) => {
+    let newDate;
+    date.setDate(date.getDate() + days);
+    return newDate;
+  };
   const date = new Date();
-  const expiryDate = date.addDays(standardShelfLife);
+  const expiryDate = addDays(standardShelfLife, date);
   return dateFormat(expiryDate, "dd/mm/yyyy");
 };
 
@@ -41,12 +46,28 @@ const FoodCard = (
   }
 ) => {
   const classes = useStyles();
-  const user = localStorage.getItem("userToken").decoded._id;
 
+  const user = localStorage.getItem("userToken");
+  const parseJwt = (user) => {
+    let base64Url = user.split(".")[1];
+    let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    let jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+
+    return JSON.parse(jsonPayload);
+  };
+
+  const parsedId = parseJwt(user)._id;
   const item = {
     name: name,
     existsId: uuid(),
-    ownerId: user,
+    ownerId: parsedId,
     isOpen: false,
     isFresh: isFresh,
     quantity: "1",
@@ -58,7 +79,7 @@ const FoodCard = (
     inFridge: false,
     inFreezer: false,
   };
-
+  console.log(item);
   const fridgeExpiryView = (fridgeExpiry) => {
     return (
       <ListItem>

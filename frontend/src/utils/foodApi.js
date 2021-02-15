@@ -9,17 +9,7 @@ export const getListItems = async (config) => {
 };
 
 export const createListItems = async (listData) => {
-  return axios.post("/api/listitems", {
-    name: listData.name,
-    existsId: listData.existsId,
-    ownerId: listData.ownerId,
-    // foodDetails: listData.foodDetails, .populate('food', '''')
-    isOpen: listData.isOpen,
-    expiryDate: listData.expiryDate,
-    quantity: listData.quantity,
-    inFridge: listData.inFridge,
-    inFreezer: listData.inFreezer,
-  });
+  return axios.post("/api/listitems", { ...listData });
 }; // from auth local storage
 
 export const updateItems = async (listUpdateArray) => {

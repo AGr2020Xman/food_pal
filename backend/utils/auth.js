@@ -5,10 +5,10 @@ const options = {
   expiresIn: 600000,
 };
 
-const createJWT = async (email, userId, name, _id) => {
+const createJWT = async (_id, email, name, userId) => {
   try {
     const payload = {
-      id: _id,
+      _id: _id,
       email: email,
       name: name,
       userId: userId,

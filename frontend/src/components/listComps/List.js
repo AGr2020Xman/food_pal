@@ -71,7 +71,7 @@ const List = ({ listItems }) => {
     const token = localStorage.getItem("userToken");
     let config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `${token}`,
       },
       data: {
         //! Take note of the `data` keyword. This is the request body.
@@ -164,7 +164,7 @@ const List = ({ listItems }) => {
         >
           Delete list
         </Button>
-        <Button onClick={saveList()}>Save list items</Button>
+        <Button onClick={saveList}>Save list items</Button>
       </table>
     </div>
   );

@@ -6,19 +6,20 @@ const StoredFood = require("../models/StoredFood");
 exports.getFood = async (req, res) => {
   try {
     const products = await Products.find(); // returns arr of obj
-
+    console.log("INSIDE GET FOOD");
     return res.status(200).json({
       success: true,
       message: "Products received",
       products: products,
     });
   } catch (err) {
-    console.log(err);
+    console.log("getFood", err);
   }
 };
 
 exports.getListItems = async (req, res) => {
   try {
+    console.log("WHERE IS _ID FROM USER", req.decoded);
     const { _id } = req.decoded;
     const listItems = await StoredFood.find({ owner: _id }); // may need to filter query down to also find just the name of the list it belongs to
     return res.status(200).json({
@@ -27,14 +28,14 @@ exports.getListItems = async (req, res) => {
       listArray: listItems,
     });
   } catch (err) {
-    console.log(err);
+    console.log("error in getList", err);
   }
 };
 
 exports.createListItems = async (req, res) => {
   try {
     console.log(req);
-    console.log(req.decoded);
+    // console.log(req.decoded);
     const { _id } = req.decoded;
 
     const bulk = req.body;

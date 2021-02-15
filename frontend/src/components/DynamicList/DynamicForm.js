@@ -72,7 +72,7 @@ const DynamicForm = () => {
     const token = localStorage.getItem("userToken");
     let config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `${token}`,
       },
       data: {
         //! Take note of the `data` keyword. This is the request body.

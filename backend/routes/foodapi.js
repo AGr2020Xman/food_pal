@@ -13,17 +13,17 @@ const {
 // const cleanBody = require("../controllers/middlewares/cleanbody.js");
 const { validateToken } = require("../controllers/middlewares/validateToken");
 
-router.get("/food", getFood);
+router.get("/food", validateToken, getFood);
 
-router.get("/listitems", getListItems);
+router.get("/listitems", validateToken, getListItems);
 
-router.post("/listitems", createListItems);
+router.post("/listitems", validateToken, createListItems);
 
-router.put("/listitems", updateItems);
+router.put("/listitems", validateToken, updateItems);
 
-router.delete("/listitems", deleteItem);
+router.delete("/listitems", validateToken, deleteItem);
 
-router.delete("/listitems", deleteAll);
+router.delete("/listitems", validateToken, deleteAll);
 
 router.post("/food", addFood);
 
