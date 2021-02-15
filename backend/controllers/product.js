@@ -181,7 +181,7 @@ exports.addFood = async (req, res) => {
       isFresh: item.isFresh,
       canRefrigerate: item.canRefrigerate,
       canFreeze: item.canFreeze,
-      standardExpiry: item.standardExpiry,
+      standardShelfLife: item.standardShelfLife,
       fridgeExpiry: item.fridgeExpiry,
       freezerExpiry: item.freezerExpiry,
     });
@@ -193,7 +193,7 @@ exports.addFood = async (req, res) => {
     });
   } catch (error) {
     console.error("adding new item error", error);
-    return res.status(500).json({
+    return res.status(400).json({
       error: true,
       message: "Error adding item",
     });
