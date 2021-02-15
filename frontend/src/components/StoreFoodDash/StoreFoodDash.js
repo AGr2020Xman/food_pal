@@ -44,9 +44,9 @@ const StoredFoodDash = () => {
     populateFood();
   }, []);
 
-  const filteredProducts = products.filter((item) => {
-    return item.name.toLowerCase().includes(debouncedQuery.toLowerCase());
-  });
+  //   const filteredProducts = products.filter((item) => {
+  //     return item.name.toLowerCase().includes(debouncedQuery.toLowerCase());
+  //   });
 
   useEffect(() => {
     getListItems(config).then((data) => {
@@ -79,7 +79,7 @@ const StoredFoodDash = () => {
       </Container>
       <Container className={classes.container}>
         <Grid container spacing={3}>
-          {filteredProducts.map((food) => {
+          {products.map((food) => {
             return (
               <Grid item xs={6} sm={3} key={food._id}>
                 <FoodCard
