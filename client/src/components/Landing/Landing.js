@@ -1,11 +1,12 @@
 import React from "react";
+import "./Landing.css";
 import Divider from "@material-ui/core/Divider";
 
-const Home = () => {
+const Landing = () => {
   return (
     <div>
-      <div className="hero">
-        <div>FoodPal Landing</div>
+      <div className="landing">
+        <div>FoodPal - Signup for free!</div>
       </div>
       <Divider />
       <div>
@@ -15,4 +16,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Landing;

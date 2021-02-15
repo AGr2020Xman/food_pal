@@ -35,6 +35,7 @@ const Navbar = () => {
   const handleLogOut = (e) => {
     e.preventDefault();
     setUserLogout(dispatch);
+    localStorage.clear();
     history.push("/");
   };
 
@@ -43,7 +44,7 @@ const Navbar = () => {
   const loginRegLink = (
     <List className={`${classes.menuButton} ${classes.navbarDisplayFlex}`}>
       <Button color="primary" variant="contained" href="/">
-        Home
+        Dashboard
       </Button>
       <Button color="secondary" variant="contained" href="/signin">
         Sign in

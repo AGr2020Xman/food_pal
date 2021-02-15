@@ -23,7 +23,7 @@ export const appInitialState = {
 export function appReducer(state, action) {
   switch (action.type) {
     case SET_CURRENT_USER:
-      console.log(state, action.payload);
+      // console.log(state, action.payload);
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),

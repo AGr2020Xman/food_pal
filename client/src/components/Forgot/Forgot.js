@@ -33,9 +33,7 @@ function Forgot(props) {
     };
     if (registerState.formIsValid) {
       try {
-        console.log(userData);
         const res = await forgotPassword(userData);
-        console.log(res.data);
         if (res.data.error) {
           errors["message"] = `${res.data.message}`;
         } else {
