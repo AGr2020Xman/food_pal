@@ -41,7 +41,7 @@ exports.createListItems = async (req, res) => {
     console.log("pre creating list items", req.body);
     const alreadyExistingItems = await StoredFood.find({ owner: _id }); //arr of obj
 
-    if (!alreadyExistingItems) {
+    if (!alreadyExistingItems.length) {
       await StoredFood.insertMany(bulk)
         .then(() => {
           console.log("Success");

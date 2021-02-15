@@ -21,26 +21,40 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StoredFoodDash = () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("userToken"),
+    },
+  };
   const [products, setProducts] = useState([]);
   const [query, setQuery] = useState("");
+  const [listItems, setList] = useState([]);
   const classes = useStyles();
 
   const debouncedQuery = useDebounce(query, 500);
 
   useEffect(() => {
-    getFood(debouncedQuery).then((data) => {
-      setProducts(data);
-    });
-  }, [debouncedQuery]);
+    const populateFood = async () => {
+      getFood(config)
+        .then((data) => {
+          setProducts(data);
+        })
+        .catch((err) => console.log(err));
+    };
+    populateFood();
+  }, []);
 
-  const [listItems, setList] = useState([]);
-
-  useEffect(() => {
-    getListItems().then((data) => {
-      setList([...listItems, ...data]);
-    });
+  const filteredProducts = products.filter((item) => {
+    return item.name.toLowerCase().includes(debouncedQuery.toLowerCase());
   });
 
+  useEffect(() => {
+    getListItems(config).then((data) => {
+      setList([...listItems, ...data]);
+      console.log("instorefooddash", listItems);
+    });
+  });
+  // [{}]
   const addListItem = (item) => {
     // take e.target.id
     setList([...listItems, item]);
@@ -52,7 +66,7 @@ const StoredFoodDash = () => {
     <div>
       <Container className={classes.container}>
         <Typography variant="h6" gutterBottom>
-          App Catalog
+          Find and track your foods
         </Typography>
       </Container>
       <Container className={classes.container}>
@@ -65,7 +79,7 @@ const StoredFoodDash = () => {
       </Container>
       <Container className={classes.container}>
         <Grid container spacing={3}>
-          {products.map((food) => {
+          {filteredProducts.map((food) => {
             return (
               <Grid item xs={6} sm={3} key={food._id}>
                 <FoodCard

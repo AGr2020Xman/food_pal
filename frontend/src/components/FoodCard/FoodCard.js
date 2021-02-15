@@ -10,6 +10,7 @@ import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import dateFormat from "dateformat";
+const { v4: uuid } = require("uuid");
 
 const useStyles = makeStyles({
   root: {
@@ -40,16 +41,22 @@ const FoodCard = (
   }
 ) => {
   const classes = useStyles();
+  const user = localStorage.getItem("userToken").decoded._id;
 
-  let item = {
-    _id: _id,
+  const item = {
     name: name,
+    existsId: uuid(),
+    ownerId: user,
+    isOpen: false,
     isFresh: isFresh,
+    quantity: "1",
     canRefrigerate: canRefrigerate,
     canFreeze: canFreeze,
-    standardShelfLife: getFormattedDate(standardShelfLife),
+    expiryDate: getFormattedDate(standardShelfLife),
     fridgeExpiry: fridgeExpiry,
     freezerExpiry: freezerExpiry,
+    inFridge: false,
+    inFreezer: false,
   };
 
   const fridgeExpiryView = (fridgeExpiry) => {

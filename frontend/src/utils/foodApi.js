@@ -1,14 +1,14 @@
 import axios from "axios";
 //
-export const getFood = () => {
-  return axios.get("/api/food");
+export const getFood = async (config) => {
+  return axios.get("/api/food", config);
 };
 
-export const getListItems = () => {
-  return axios.get("/api/listitems");
+export const getListItems = async (config) => {
+  return axios.get("/api/listitems", config);
 };
 
-export const createListItems = (listData) => {
+export const createListItems = async (listData) => {
   return axios.post("/api/listitems", {
     name: listData.name,
     existsId: listData.existsId,
@@ -22,19 +22,19 @@ export const createListItems = (listData) => {
   });
 }; // from auth local storage
 
-export const updateItems = (listUpdateArray) => {
+export const updateItems = async (listUpdateArray) => {
   return axios.patch("/api/listitems", listUpdateArray);
 };
 
-export const deleteItem = (config) => {
+export const deleteItem = async (config) => {
   return axios.delete("/api/listitems/", config);
 };
 
-export const deleteAll = (config) => {
+export const deleteAll = async (config) => {
   return axios.delete("/api/listitems/", config); //req.decoded required for _id
 };
 
-export const addFood = (payload) => {
+export const addFood = async (payload) => {
   return axios.post("/api/food", {
     name: payload.name,
     isFresh: payload.isFresh,
