@@ -5,53 +5,122 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import dateFormat from "dateformat";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    maxWidth: 345,
   },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
+  media: {
+    height: 140,
   },
 });
 
-export default function SimpleCard(props) {
+const getFormattedDate = (standardShelfLife) => {
+  const date = new Date();
+  const expiryDate = date.addDays(standardShelfLife);
+  return dateFormat(expiryDate, "dd/mm/yyyy");
+};
+
+const FoodCard = (
+  { addListItem },
+  {
+    _id,
+    name,
+    isFresh,
+    canRefrigerate,
+    canFreeze,
+    standardShelfLife,
+    fridgeExpiry,
+    freezerExpiry,
+  }
+) => {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+
+  let item = {
+    _id: _id,
+    name: name,
+    isFresh: isFresh,
+    canRefrigerate: canRefrigerate,
+    canFreeze: canFreeze,
+    standardShelfLife: getFormattedDate(standardShelfLife),
+    fridgeExpiry: fridgeExpiry,
+    freezerExpiry: freezerExpiry,
+  };
+
+  const fridgeExpiryView = (fridgeExpiry) => {
+    return (
+      <ListItem>
+        <CheckCircleOutlineIcon />
+        <ListItemText primary={fridgeExpiry} />
+      </ListItem>
+    );
+  };
+
+  const freezerExpiryView = (freezerExpiry) => {
+    return (
+      <ListItem>
+        <CheckCircleOutlineIcon />
+        <ListItemText primary={freezerExpiry} />
+      </ListItem>
+    );
+  };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} key={_id}>
       <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          {}
+        <Typography gutterBottom variant="h5" component="h2">
+          {name}
         </Typography>
-        <Typography variant="h5" component="h2">
-          be{bull}nev{bull}o{bull}lent
+        <Typography variant="body2" color="textSecondary" component="p">
+          {isFresh ? "Fresh produce" : "Perishable Item"}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+        <Typography variant="body2" color="textSecondary" component="p">
+          <table>
+            <thead>
+              <tr>
+                <th>Standard shelf life</th>
+                <th>Safe to refrigerate</th>
+                <th>Safe to freeze</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {standardShelfLife === "1"
+                    ? `${standardShelfLife} day`
+                    : `${standardShelfLife} days`}
+                </td>
+                <td>
+                  {canRefrigerate ? (
+                    fridgeExpiryView(fridgeExpiry)
+                  ) : (
+                    <CancelOutlinedIcon />
+                  )}
+                </td>
+                <td>
+                  {canFreeze ? (
+                    freezerExpiryView(freezerExpiry)
+                  ) : (
+                    <CancelOutlinedIcon />
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button onClick={addListItem(item)} size="small" color="primary">
+          Add to list
+        </Button>
       </CardActions>
     </Card>
   );
-}
+};
+
+export default FoodCard;
