@@ -21,7 +21,7 @@ let ProductSchema = new Schema({
     required: true,
   },
   standardShelfLife: {
-    type: String,
+    type: Number,
     required: true,
   },
   fridgeExpiry: {

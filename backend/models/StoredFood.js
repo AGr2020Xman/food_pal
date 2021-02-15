@@ -21,7 +21,7 @@ let ListItemSchema = new Schema(
     },
     ownerId: {
       type: String,
-      ref: "users",
+      required: true,
     },
     foodDetails: {
       type: Schema.Types.ObjectId,
