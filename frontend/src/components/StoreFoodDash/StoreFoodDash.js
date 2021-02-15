@@ -62,16 +62,13 @@ const StoredFoodDash = () => {
   }, []);
 
   // [{}]
+
   const addListItem = (item) => {
     // take e.target.id
     setList([...listItems, item]);
     // [...listItems]
     // food -> [{},...]
   };
-  console.log(
-    "food",
-    filteredProducts.map((food) => console.log("food2", food))
-  );
 
   return (
     <div>
@@ -90,21 +87,14 @@ const StoredFoodDash = () => {
       </Container>
       <Container className={classes.container}>
         <Grid container spacing={3}>
-          {filteredProducts?.map((food) => (
-            <Grid item xs={6} sm={3} key={food._id}>
-              <FoodCard
-                addListItem={addListItem}
-                _id={food._id}
-                name={food.name}
-                isFresh={food.isFresh}
-                canRefigerate={food.canRefigerate}
-                canFreeze={food.canFreeze}
-                standardShelfLife={food.standardShelfLife}
-                fridgeExpiry={food.fridgeExpiry}
-                freezeExpiry={food.freezeExpiry}
-              />
-            </Grid>
-          ))}
+          {filteredProducts.map((food) => {
+            console.log("in map", food);
+            return (
+              <Grid item xs={6} sm={3} key={food._id}>
+                <FoodCard addListItem={addListItem} food={food} />
+              </Grid>
+            );
+          })}
         </Grid>
         <Grid container>
           <Grid item>

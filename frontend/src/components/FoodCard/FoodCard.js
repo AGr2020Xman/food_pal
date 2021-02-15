@@ -10,6 +10,7 @@ import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import dateFormat from "dateformat";
+import Divider from "@material-ui/core/Divider";
 const { v4: uuid } = require("uuid");
 
 const useStyles = makeStyles({
@@ -32,29 +33,7 @@ const getFormattedDate = (standardShelfLife) => {
   return dateFormat(expiryDate, "dd/mm/yyyy");
 };
 
-const FoodCard = (
-  { addListItem },
-  {
-    _id,
-    name,
-    isFresh,
-    canRefrigerate,
-    canFreeze,
-    standardShelfLife,
-    fridgeExpiry,
-    freezerExpiry,
-  }
-) => {
-  console.log({
-    _id,
-    name,
-    isFresh,
-    canRefrigerate,
-    canFreeze,
-    standardShelfLife,
-    fridgeExpiry,
-    freezerExpiry,
-  });
+const FoodCard = (props) => {
   const classes = useStyles();
 
   const user = localStorage.getItem("userToken");
@@ -75,25 +54,26 @@ const FoodCard = (
 
   const parsedId = parseJwt(user)._id;
   const item = {
-    name: name,
+    name: props.food.name,
     existsId: uuid(),
     ownerId: parsedId,
     isOpen: false,
-    isFresh: isFresh,
+    isFresh: props.food.isFresh,
     quantity: "1",
-    canRefrigerate: canRefrigerate,
-    canFreeze: canFreeze,
-    expiryDate: getFormattedDate(standardShelfLife),
-    fridgeExpiry: fridgeExpiry,
-    freezerExpiry: freezerExpiry,
+    canRefrigerate: props.food.canRefrigerate,
+    canFreeze: props.food.canFreeze,
+    expiryDate: getFormattedDate(props.food.standardShelfLife),
+    fridgeExpiry: props.food.fridgeExpiry,
+    freezerExpiry: props.food.freezerExpiry,
     inFridge: false,
     inFreezer: false,
   };
+  console.log(item);
   const fridgeExpiryView = (fridgeExpiry) => {
     return (
       <ListItem>
+        <ListItemText primary={`${fridgeExpiry}`} />
         <CheckCircleOutlineIcon />
-        <ListItemText primary={fridgeExpiry} />
       </ListItem>
     );
   };
@@ -101,58 +81,63 @@ const FoodCard = (
   const freezerExpiryView = (freezerExpiry) => {
     return (
       <ListItem>
+        <ListItemText primary={`${freezerExpiry}`} />
         <CheckCircleOutlineIcon />
-        <ListItemText primary={freezerExpiry} />
       </ListItem>
     );
   };
 
   return (
-    <Card className={classes.root} key={_id}>
+    <Card className={classes.root} key={props.food._id}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
-          {name}
+          {props.food.name}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          Second{/* {isFresh ? "Fresh produce" : "Perishable Item"} */}
+          {props.food.isFresh ? "Fresh produce" : "Perishable Item"}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          <table>
-            <thead>
-              <tr>
-                <th>Standard shelf life</th>
-                <th>Safe to refrigerate</th>
-                <th>Safe to freeze</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  {standardShelfLife === "1"
-                    ? `${standardShelfLife} day`
-                    : `${standardShelfLife} days`}
-                </td>
-                <td>
-                  {canRefrigerate ? (
-                    fridgeExpiryView(fridgeExpiry)
-                  ) : (
-                    <CancelOutlinedIcon />
-                  )}
-                </td>
-                <td>
-                  {canFreeze ? (
-                    freezerExpiryView(freezerExpiry)
-                  ) : (
-                    <CancelOutlinedIcon />
-                  )}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </Typography>
+        <Divider />
+        {/* <Typography variant="body2" color="textSecondary" component="p"> */}
+        <table>
+          <thead>
+            <tr>
+              <th>Standard shelf life</th>
+              <th>Safe to refrigerate</th>
+              <th>Safe to freeze</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                {props.standardShelfLife === "1"
+                  ? `${props.food.standardShelfLife} day`
+                  : `${props.food.standardShelfLife} days`}
+              </td>
+              <td>
+                {props.food.canRefrigerate ? (
+                  fridgeExpiryView(props.food.fridgeExpiry)
+                ) : (
+                  <CancelOutlinedIcon />
+                )}
+              </td>
+              <td>
+                {props.food.canFreeze ? (
+                  freezerExpiryView(props.food.freezerExpiry)
+                ) : (
+                  <CancelOutlinedIcon />
+                )}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        {/* </Typography> */}
       </CardContent>
       <CardActions>
-        <Button onClick={() => addListItem(item)} size="small" color="primary">
+        <Button
+          onClick={() => props.addListItem(item)}
+          size="small"
+          color="primary"
+        >
           Add to list
         </Button>
       </CardActions>
