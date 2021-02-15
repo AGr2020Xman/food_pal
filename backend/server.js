@@ -22,10 +22,11 @@ const port = process.env.PORT || 7000;
 
 // db connection
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/newfoodPal", {
     useNewUrlParser: true,
-    useFindAndModify: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
   })
   .then(() => console.log("DB Connection success"))
   .catch((err) => {
