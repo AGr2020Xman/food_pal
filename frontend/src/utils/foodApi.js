@@ -1,7 +1,7 @@
 import axios from "axios";
 //
 export const getFood = () => {
-  return axios.get("/api/getfood");
+  return axios.get("/api/food");
 };
 
 export const getListItems = () => {

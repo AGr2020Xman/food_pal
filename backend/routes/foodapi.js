@@ -13,7 +13,7 @@ const {
 // const cleanBody = require("../controllers/middlewares/cleanbody.js");
 const { validateToken } = require("../controllers/middlewares/validateToken");
 
-router.get("/getfood", validateToken, getFood);
+router.get("/food", validateToken, getFood);
 
 router.get("/listitems", validateToken, getListItems);
 
