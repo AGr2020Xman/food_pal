@@ -162,7 +162,7 @@ const List = ({ listItems }) => {
         >
           Delete list
         </Button>
-        <Button onClick={saveList}>Save list items</Button>
+        <Button onClick={() => saveList()}>Save list items</Button>
       </table>
     </div>
   );

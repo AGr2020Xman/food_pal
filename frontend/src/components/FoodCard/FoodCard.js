@@ -45,6 +45,16 @@ const FoodCard = (
     freezerExpiry,
   }
 ) => {
+  console.log({
+    _id,
+    name,
+    isFresh,
+    canRefrigerate,
+    canFreeze,
+    standardShelfLife,
+    fridgeExpiry,
+    freezerExpiry,
+  });
   const classes = useStyles();
 
   const user = localStorage.getItem("userToken");
@@ -104,7 +114,7 @@ const FoodCard = (
           {name}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          {isFresh ? "Fresh produce" : "Perishable Item"}
+          Second{/* {isFresh ? "Fresh produce" : "Perishable Item"} */}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           <table>
@@ -142,7 +152,7 @@ const FoodCard = (
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={addListItem(item)} size="small" color="primary">
+        <Button onClick={() => addListItem(item)} size="small" color="primary">
           Add to list
         </Button>
       </CardActions>

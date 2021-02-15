@@ -34,27 +34,31 @@ const StoredFoodDash = () => {
 
   useEffect(() => {
     const populateFood = async () => {
-      getFood(config)
+      await getFood(config)
         .then((res) => {
-          console.log("DATA INSIDE GETFOOD", res.data);
           setProducts(res.data.products);
-          console.log("products log", products);
+          // console.log("products log", products);
         })
         .catch((err) => console.log(err));
     };
     populateFood();
   }, []);
 
-  //   const filteredProducts = products.filter((item) => {
-  //     return item.name.toLowerCase().includes(debouncedQuery.toLowerCase());
-  //   });
+  const filteredProducts = products.filter((item) => {
+    return item.name.toLowerCase().includes(debouncedQuery.toLowerCase());
+  });
 
   useEffect(() => {
-    getListItems(config).then((res) => {
-      console.log("DATA INSIDE GETLIST", res.data);
-      setList([...listItems, ...res.data.listArray]);
-      console.log("instorefooddash", listItems);
-    });
+    const getItems = async () => {
+      await getListItems(config)
+        .then((res) => {
+          setList([...listItems, ...res.data.listArray]);
+        })
+        .catch((err) => {
+          console.log("error getting items", err);
+        });
+    };
+    getItems();
   }, []);
 
   // [{}]
@@ -64,6 +68,10 @@ const StoredFoodDash = () => {
     // [...listItems]
     // food -> [{},...]
   };
+  console.log(
+    "food",
+    filteredProducts.map((food) => console.log("food2", food))
+  );
 
   return (
     <div>
@@ -82,20 +90,18 @@ const StoredFoodDash = () => {
       </Container>
       <Container className={classes.container}>
         <Grid container spacing={3}>
-          {products?.map((food) => (
+          {filteredProducts?.map((food) => (
             <Grid item xs={6} sm={3} key={food._id}>
               <FoodCard
                 addListItem={addListItem}
-                props={
-                  (food._id,
-                  food.name,
-                  food.isFresh,
-                  food.canRefigerate,
-                  food.canFreeze,
-                  food.standardShelfLife,
-                  food.fridgeExpiry,
-                  food.freezeExpiry)
-                }
+                _id={food._id}
+                name={food.name}
+                isFresh={food.isFresh}
+                canRefigerate={food.canRefigerate}
+                canFreeze={food.canFreeze}
+                standardShelfLife={food.standardShelfLife}
+                fridgeExpiry={food.fridgeExpiry}
+                freezeExpiry={food.freezeExpiry}
               />
             </Grid>
           ))}
