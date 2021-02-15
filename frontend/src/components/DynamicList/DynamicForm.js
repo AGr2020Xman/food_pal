@@ -1,83 +1,66 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+const { v4: uuid } = require("uuid");
 import CustomerRow from "./CustomerRow";
 import { Link } from "react-router-dom";
+import { getListItems, deleteItem } from "../../utils/foodApi";
+import { Button } from "@material-ui/core";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 const DynamicForm = () => {
   const [stateList, setListState] = useState([]);
 
   useEffect(() => {
-    getListItems();
+    getListItems().then((data) => setListState(data));
   }, []);
 
-  const getListItems = () => {
+  const populateList = () => {
     axios
-      .get("/listitems")
-      .then(data => {
-        console.log('log data from storedfooditems',data);
+      .getListItems()
+      .then((data) => {
+        console.log("log data from storedfooditems", data);
         let item = data.data;
         setCustomerState(
-          item.map(d => {
+          item.map((d) => {
             return {
               select: false,
-              id: d._id,
+              existsId: uuid(),
               name: d.name,
-              dob: new Date(d.dob).toDateString(),
-              creditlimit: d.creditlimit
             };
           })
         );
       })
-      .catch(err => alert(err));
+      .catch((err) => alert(err));
   };
 
-  const deleteCustomerByIds = () => {
-    let arrayids = [];
-    stateCustomer.forEach(d => {
-      if (d.select) {
-        arrayids.push(d.id);
-      }
-    });
-    axios
-      .delete(`http://localhost:8080/customers/${arrayids}`)
-      .then(data => {
-        console.log(data);
-        getCustomer();
+  const deleteByItem = async (event) => {
+    const token = localStorage.getItem("userToken");
+    let config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        //! Take note of the `data` keyword. This is the request body.
+        existsId: event.target.existsId,
+      },
+    };
+    await deleteItem(config)
+      .then(() => {
+        console.log("Successfully deleted ");
       })
-      .catch(err => alert(err));
+      .catch((err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
   };
 
   return (
     <div>
-      <Link to="/add">
-        <button className="btn btn-primary btn-sm m-2">Add Customer</button>
-      </Link>
-      <button
-        className="btn btn-danger btn-sm m-2"
-        onClick={() => {
-          deleteCustomerByIds();
-        }}
-      >
-        Delete Customer
-      </button>
       <table className="table">
         <thead>
           <tr>
-            <th>
-              <input
-                type="checkbox"
-                onChange={e => {
-                  let value = e.target.checked;
-                  setCustomerState(
-                    stateCustomer.map(d => {
-                      d.select = value;
-                      return d;
-                    })
-                  );
-                }}
-              />
-            </th>
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Dob</th>
@@ -86,64 +69,26 @@ const DynamicForm = () => {
           </tr>
         </thead>
         <tbody>
-          <CustomerRow
+          {stateList.map((item) => {
+            <tr>
+              <td>{item}</td>
+              <td>{item}</td>
+              <td>
+                <Button onClick={deleteByItem}>
+                  <DeleteForeverIcon />
+                </Button>
+              </td>
+            </tr>;
+          })}
+
+          {/* <CustomerRow
             stateCustomer={stateCustomer}
             setCustomerState={setCustomerState}
-          />
+          /> */}
         </tbody>
       </table>
     </div>
   );
-}
-
-export default Customer;
-const DynamicForm = () => {
-  const [state, setState] = useState({
-
-  });
-
-  return (
-    <ul>
-    <li>
-      <input>
-      </input>
-    <form>
-      <select>
-        <option value="true">{}</option>
-        <option value="false">{}</option>
-      </select>
-      <button type="submit">Save</button>
-      <button type="button">Edit</button>
-      <button type="button">Delete Selected</button>
-    </form>
-    </li>
-    </ul>
-  );
 };
-
-const List = props => {
-  
-  const removeItem = () => {
-
-  }
-
-  return (
-  <ul>
-    {props.listitems.map((item, index) => (
-      <li key={index}>
-        <input
-          onClick={props.removeTodo.bind(null, item)}
-          type="checkbox"
-        />
-        {item}
-      </li>
-    ))}
-    <style jsx>{`
-      ul {
-        list-style-type: none;
-      }
-    `}</style>
-  </ul>
-)};
 
 export default DynamicForm;
