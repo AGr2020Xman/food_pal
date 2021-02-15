@@ -90,11 +90,12 @@ const List = (props) => {
             </th>
           </tr>
         </thead>
+        {/*contentEditable*/}
         <tbody>
           {stateList.map((item) => {
             return (
               <tr key={item.existsId}>
-                <td contentEditable value={item.name} onChange={() => {}}>
+                <td value={item.name} onChange={() => {}}>
                   {item.name}
                 </td>
                 <td>{item.isOpen ? <CheckIcon /> : <CloseIcon />}</td>
@@ -119,28 +120,28 @@ const List = (props) => {
                   {item.inFreezer ? "True" : "False"}
                 </td>
                 <td>
-                  <Button
+                  <button
                     onClick={() => {
                       deleteByItem(item.existsId);
                       deleteRow(item.existsId);
                     }}
                   >
                     <DeleteForeverIcon />
-                  </Button>
+                  </button>
                 </td>
               </tr>
             );
           })}
         </tbody>
-        <Button
-          onClick={() => {
-            deleteAll();
-          }}
-        >
-          Delete list
-        </Button>
-        <Button onClick={() => saveList()}>Save list items</Button>
       </table>
+      <Button
+        onClick={() => {
+          deleteAll();
+        }}
+      >
+        Delete list
+      </Button>
+      <Button onClick={() => saveList()}>Save list items</Button>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
+// import IconButton from "@material-ui/core/IconButton";
 import TemporaryDrawer from "../TemporaryDrawer/TemporaryDrawer";
 import { useHistory } from "react-router-dom";
 import { useAppContext } from "../../store";
@@ -68,16 +68,16 @@ const Navbar = () => {
   return (
     <AppBar position="relative" className={classes.root}>
       <Toolbar>
-        <IconButton
+        {/* <IconButton
           edge="start"
           className={classes.menuButton}
           color="inherit"
           aria-label="menu"
-        >
-          {/* <MenuIcon /> */}
-          <TemporaryDrawer />
-        </IconButton>
-        <Typography variant="h6" className={classes.title} nowrap>
+        > */}
+        {/* <MenuIcon /> */}
+        <TemporaryDrawer />
+        {/* </IconButton> */}
+        <Typography variant="h6" className={classes.title}>
           FoodPal
         </Typography>
         {state.isAuthenticated ? userLink : loginRegLink}

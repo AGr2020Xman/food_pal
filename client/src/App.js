@@ -16,7 +16,7 @@ import Reset from "./components/Reset/Reset";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppContextProvider } from "./store";
 import PrivateRoute from "./Auth";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 
 import "./App.css";
 import Activate from "./components/Activate/Activate";
@@ -25,7 +25,7 @@ function App() {
   return (
     <AppContextProvider>
       <Router>
-        <ToastContainer
+        {/* <ToastContainer
           position="top-center"
           autoClose={5000}
           hideProgressBar={false}
@@ -35,7 +35,7 @@ function App() {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-        />
+        /> */}
         <div className="pl-0 pr-0 m-0 container-fluid">
           <Navbar />
           <Route exact path="/" component={Landing} />

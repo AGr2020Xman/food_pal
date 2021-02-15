@@ -46,7 +46,7 @@ function Signin() {
       setAuthToken(token);
       // Decode token to get user data
       const decodedToken = jwt_decode(token);
-      console.log("decoded", decodedToken);
+      // console.log("decoded", decodedToken);
       // Set current user
       await appDispatch({ type: SET_CURRENT_USER, payload: decodedToken });
       errors["success"] = "Success! Redirecting...";
