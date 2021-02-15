@@ -8,7 +8,6 @@ import Grid from "@material-ui/core/Grid";
 import useDebounce from "../../utils/debounce";
 import List from "../listComps/List";
 
-// import List from "../FoodList/FoodList";
 import { getFood, getListItems } from "../../utils/foodApi";
 
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +55,7 @@ const StoredFoodDash = () => {
       setList([...listItems, ...res.data.listArray]);
       console.log("instorefooddash", listItems);
     });
-  });
+  }, []);
 
   // [{}]
   const addListItem = (item) => {

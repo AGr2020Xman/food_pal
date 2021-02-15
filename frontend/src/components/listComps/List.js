@@ -101,6 +101,13 @@ const List = ({ listItems }) => {
     const index = list.indexOf(item);
     list[index] = { ...list[index], isOpen: e.target.value };
     setListState(list);
+    // <Switch
+    //                 value={item.isOpen}
+    //                 checked={item.isOpen}
+    //                 onChange={updateIsOpen(item.existsId)}
+    //                 name="isOpen"
+    //                 inputProps={{ "aria-label": "secondary checkbox" }}
+    //               />
   };
 
   return (
@@ -127,16 +134,7 @@ const List = ({ listItems }) => {
                 <td contenteditable value={item.name}>
                   {item.name}
                 </td>
-                <td>
-                  <Switch
-                    value={item.isOpen}
-                    checked={item.isOpen}
-                    onChange={updateIsOpen(item.existsId)}
-                    name="isOpen"
-                    inputProps={{ "aria-label": "secondary checkbox" }}
-                  />
-                  {item.isOpen}
-                </td>
+                <td>{item.isOpen}</td>
                 <td value={item.expiryDate}>{item.expiryDate}</td>
                 <td value={item.quantity}>{item.quantity}</td>
                 <td value={item.inFridge}>{item.inFridge}</td>

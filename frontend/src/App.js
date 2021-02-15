@@ -6,7 +6,6 @@ import {
   Switch,
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import FoodList from "./components/FoodList/FoodList";
 // import Header from "./components/Header/Header";
 // import Button from "@material-ui/core/Button";
 import Navbar from "./components/Navbar/Navbar";

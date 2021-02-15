@@ -79,7 +79,6 @@ const FoodCard = (
     inFridge: false,
     inFreezer: false,
   };
-  console.log(item);
   const fridgeExpiryView = (fridgeExpiry) => {
     return (
       <ListItem>
