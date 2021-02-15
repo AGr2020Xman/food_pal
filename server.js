@@ -33,13 +33,17 @@ mongoose
     console.error("Mongo connection error, ", err);
   });
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 // middleware
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
-app.use(express.static(path.join(__dirname, "frontend", "build")));
+// app.use(express.static(path.join(__dirname, "client", "build")));
 app.use("/api", authRoutes);
 app.use("/api", foodRoutes);
 
@@ -50,9 +54,9 @@ app.get("/ping", (req, res) => {
   });
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+// });
 
 app.listen(port, () => {
   console.log(`App running on port ${port}!`);
