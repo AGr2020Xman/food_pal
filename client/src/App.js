@@ -11,7 +11,7 @@ import "./App.css";
 import Landing from "./components/Landing/Landing";
 import Signup from "./components/Signup/Signup";
 import Signin from "./components/Signin/Signin";
-// import Forgot from "./components/Forgot/Forgot";
+import Forgot from "./components/Forgot/Forgot";
 import Reset from "./components/Reset/Reset";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppContextProvider } from "./store";
@@ -44,7 +44,7 @@ function App() {
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/activate" component={Activate} />
             <Route exact path="/reset" component={Reset} />
-            {/* <Route exact path="/forgot" component={Forgot} /> */}
+            <Route exact path="/forgot" component={Forgot} />
             <PrivateRoute component={Home} path="/home" exact />
             <PrivateRoute
               component={StoredFoodDash}
