@@ -14,7 +14,7 @@ const app = express();
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-// app.use(express.static("public"));
+app.use(express.static("public"));
 
 const port = process.env.PORT || 7000;
 
@@ -45,7 +45,9 @@ app.use(express.json());
 // app.use(express.static(path.join(__dirname, "../build")));
 app.use("/api", authRoutes);
 app.use("/api", foodRoutes);
-
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
+});
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -58,9 +60,7 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build/index.html"));
-});
+
 app.listen(port, () => {
   console.log(`App running on port ${port}!`);
 });
