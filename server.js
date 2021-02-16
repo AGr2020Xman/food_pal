@@ -11,6 +11,14 @@ const authRoutes = require("./routes/auth");
 const foodRoutes = require("./routes/foodapi");
 
 const app = express();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../build"));
+  });
+}
+app.use(express.static("public"));
 
 const port = process.env.PORT || 7000;
 
@@ -38,18 +46,10 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // app.use(express.static("public"));
-app.use(express.static(path.join(__dirname, "../build")));
+// app.use(express.static(path.join(__dirname, "../build")));
 app.use("/api", authRoutes);
 app.use("/api", foodRoutes);
 
-app.get("/ping", (req, res) => {
-  return res.send({
-    error: false,
-    message: "Server is healthy",
-  });
-});
-
-app.use(express.static("public"));
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -62,14 +62,6 @@ app.use((req, res, next) => {
   );
   next();
 });
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-
-  // app.get("*", (req, res) => {
-  //   res.sendFile(path.join(__dirname, "../build"));
-  // });
-}
 
 app.listen(port, () => {
   console.log(`App running on port ${port}!`);
