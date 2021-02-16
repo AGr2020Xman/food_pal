@@ -32,10 +32,6 @@ mongoose
     console.error("Mongo connection error, ", err);
   });
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
-
 // middleware
 app.use(bodyParser.json());
 app.use(cors());
@@ -53,9 +49,13 @@ app.get("/ping", (req, res) => {
   });
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../build"));
-});
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../build"));
+  });
+}
 
 app.listen(port, () => {
   console.log(`App running on port ${port}!`);
