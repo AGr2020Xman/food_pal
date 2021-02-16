@@ -62,19 +62,19 @@ To install FoodPal:
 
 _Main dash for loading up_
 
-![](./public/images/landing.JPG)
+![](./docs/images/landing.JPG)
 
 _Dashboard changes, as do options once signed in_
 
-![](./public/images/home.JPG)
+![](./docs/images/home.JPG)
 
 _Drawer active with some options displayed_
 
-![](./public/images/drawer.JPG)
+![](./docs/images/drawer.JPG)
 
 _Main feature with working search filter, and current food choices uploaded to the database. Additional feature improvements to be made to the stored list_
 
-![](./public/images/development.JPG)
+![](./docs/images/development.JPG)
 
 ## Future
 

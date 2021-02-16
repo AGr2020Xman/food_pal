@@ -13,12 +13,8 @@ const foodRoutes = require("./routes/foodapi");
 const app = express();
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../build"));
-  });
 }
-app.use(express.static("public"));
+// app.use(express.static("public"));
 
 const port = process.env.PORT || 7000;
 
@@ -62,7 +58,9 @@ app.use((req, res, next) => {
   );
   next();
 });
-
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
+});
 app.listen(port, () => {
   console.log(`App running on port ${port}!`);
 });
