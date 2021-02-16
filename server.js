@@ -49,6 +49,7 @@ app.get("/ping", (req, res) => {
   });
 });
 
+app.use(express.static("public"));
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -65,9 +66,9 @@ app.use((req, res, next) => {
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../build"));
-  });
+  // app.get("*", (req, res) => {
+  //   res.sendFile(path.join(__dirname, "../build"));
+  // });
 }
 
 app.listen(port, () => {
