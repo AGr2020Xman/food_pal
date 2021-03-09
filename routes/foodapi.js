@@ -1,15 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getFood,
   getListItems,
   createListItems,
   updateItems,
   deleteItem,
   deleteAll,
-  addFood,
-  updateFood,
-} = require("../controllers/product");
+} = require("../controllers/listitems");
+const { getFood, addFood, updateFood } = require("../controllers/food");
 // const cleanBody = require("../controllers/middlewares/cleanbody.js");
 const { validateToken } = require("../controllers/middlewares/validateToken");
 
