@@ -4,7 +4,7 @@ require("dotenv").config();
 const User = require("../../models/Users");
 
 const validateToken = async (req, res, next) => {
-  console.log("req.headers", req.headers);
+  // console.log("req.headers", req.headers);
 
   const authorizationHeader = req.headers.authorization;
   let result;
@@ -46,7 +46,7 @@ const validateToken = async (req, res, next) => {
     // result["referralCode"] = user.referralCode; for referral code implementation in future
 
     req.decoded = result; // append the result in the "decoded" field of req
-    console.log("inside validate", req.decoded);
+    // console.log("inside validate", req.decoded);
 
     next();
   } catch (err) {
