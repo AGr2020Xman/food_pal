@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 const getFormattedDate = (standardShelfLife) => {
   const addDays = (days, date) => {
     let newDate;
-    date.setDate(date.getDate() + days);
+    newDate = date.setDate(date.getDate() + days);
     return newDate;
   };
   const date = new Date();
