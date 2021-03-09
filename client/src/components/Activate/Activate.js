@@ -35,9 +35,9 @@ function Activate() {
     };
     if (formState.formIsValid) {
       try {
-        console.log(userData);
+        // console.log(userData);
         const res = await activateUser(userData);
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.error) {
           errors["failure"] = `${res.data.message}`;
         } else {
