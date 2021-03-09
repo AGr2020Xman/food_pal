@@ -33,7 +33,7 @@ let ListItemSchema = new Schema(
       default: false,
     },
     expiryDate: {
-      type: Date,
+      type: String,
       required: false,
       // default: 'See product for details'
     },
