@@ -19,7 +19,7 @@ router.post("/listitems", validateToken, createListItems);
 
 router.put("/listitems", validateToken, updateItems);
 
-router.delete("/listitems", validateToken, deleteItem);
+router.delete("/listitem", validateToken, deleteItem);
 
 router.delete("/listitems", validateToken, deleteAll);
 

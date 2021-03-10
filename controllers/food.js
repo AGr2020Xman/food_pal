@@ -44,7 +44,7 @@ exports.addFood = async (req, res) => {
   }
   return res.status(200).json({
     success: true,
-    message: "Add successful",
+    message: `Add of ${req.body.name} successful`,
   });
 };
 

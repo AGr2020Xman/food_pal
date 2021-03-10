@@ -105,7 +105,7 @@ const FoodCard = (props) => {
           {props.food.isFresh ? "Fresh produce" : "Perishable Item"}
         </Typography>
         <Divider />
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" color="textSecondary" component="span">
           <table>
             <thead>
               <tr>

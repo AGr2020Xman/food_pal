@@ -33,6 +33,7 @@ const Landing = () => {
       <Divider />
       <div>
         <h3 className="food-facts">Stay tuned for food facts...</h3>
+        <Grid container></Grid>
       </div>
       <div>
         <Grid container justify="center">

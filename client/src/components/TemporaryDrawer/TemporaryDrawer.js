@@ -11,7 +11,7 @@ import CreateNewFolderIcon from "@material-ui/icons/CreateNewFolder";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
-
+import KitchenIcon from "@material-ui/icons/Kitchen";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router-dom";
 import { IconButton } from "@material-ui/core";
@@ -89,6 +89,11 @@ export default function TemporaryDrawer() {
       text: "My lists",
       icon: <ExitToAppIcon />,
       onClick: () => history.push("/foodpal_list"),
+    },
+    {
+      text: "Suggest new food",
+      icon: <KitchenIcon />,
+      onClick: () => history.push("/add_food"),
     },
   ];
   const authed = (

@@ -13,10 +13,11 @@ import Signup from "./components/Signup/Signup";
 import Signin from "./components/Signin/Signin";
 import Forgot from "./components/Forgot/Forgot";
 import Reset from "./components/Reset/Reset";
+import AddDash from "./components/AddFood/AddFood";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppContextProvider } from "./store";
 import PrivateRoute from "./Auth";
-// import { ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import "./App.css";
 import Activate from "./components/Activate/Activate";
@@ -25,17 +26,6 @@ function App() {
   return (
     <AppContextProvider>
       <Router>
-        {/* <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        /> */}
         <div
           className="pl-5 pr-5 m-0 container-fluid"
           style={{
@@ -47,9 +37,20 @@ function App() {
             flexDirection: "column",
           }}
         >
-          <Navbar />
-          <Route exact path="/" component={Landing} />
+          <ToastContainer
+            position="top-center"
+            autoClose={2500}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
           <div className="p-0 m-0 container-fluid">
+            <Navbar />
+            <Route exact path="/" component={Landing} />
             <Route exact path="/signin" component={Signin} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/activate" component={Activate} />
@@ -61,6 +62,7 @@ function App() {
               path="/foodpal_list"
               exact
             />
+            <PrivateRoute component={AddDash} path="/add_food" exact />
           </div>
         </div>
       </Router>

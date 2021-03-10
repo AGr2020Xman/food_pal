@@ -1,6 +1,8 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
 // import Editable from "../Editable/Editable";
+import dateFormat from "dateformat";
+
 import { Button } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CheckIcon from "@material-ui/icons/Check";
@@ -22,12 +24,8 @@ const List = (props) => {
   const [stateList, setListState] = useState([]);
 
   useEffect(() => {
-    const settingList = () => {
-      console.log([...props.listItems]);
-      setListState([...props.listItems]);
-      console.log("listInit", stateList);
-    };
-    settingList();
+    setListState([...props.listItems]);
+    console.log("listInit", stateList);
   }, [props.listItems]);
 
   // const updateInput = (e, existsId) => {
@@ -38,50 +36,35 @@ const List = (props) => {
   //   setListState([...listItems]);
   // };
 
-  const changeQuantity = (existsId, e) => {
-    const newList = stateList;
-    let index = newList.findIndex((i) => i.existsId === existsId);
-    console.log(index, newList[index]);
-    newList[index].quantity = e.target.value;
-    console.log(newList);
-    setListState([...newList]);
+  const handleOnChange = (item) => {
+    setListState(
+      stateList.map((i) => {
+        if (i.existsId === item.existsId) {
+          return item;
+        }
+        return i;
+      })
+    );
   };
 
-  const handleClickFrz = (e, item) => {
-    let currentState = e.currentTarget.value;
-    if (currentState === "false") {
-      e.currentTarget.value = true;
-      e.currentTarget.textContent = "TRUE";
-      item.inFreezer = true;
-    } else {
-      e.currentTarget.value = false;
-      e.currentTarget.innerText = "FALSE";
-      item.inFreezer = false;
-    }
-  };
+  const threeDayWarning = (expiryDate) => {
+    const minusDays = (date) => {
+      let newDate;
+      newDate = date.setDate(date.getDate() - 3);
+      return newDate;
+    };
+    let dateParts = expiryDate.split("/");
+    const date = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+    const warningDateComparable = minusDays(date);
+    const currentDateComparable = new Date();
+    // const warningDate = dateFormat(minusDays(date), "dd/mm/yyyy");
+    // const currentDate = dateFormat(new Date(), "dd/mm/yyyy");
 
-  const handleClickFrg = (e, item) => {
-    let currentState = e.currentTarget.value;
-    if (currentState === "false") {
-      e.currentTarget.value = true;
-      e.currentTarget.textContent = "TRUE";
-      item.inFridge = true;
-    } else {
-      e.currentTarget.value = false;
-      e.currentTarget.innerText = "FALSE";
-      item.inFridge = false;
+    // if CURRENT_DATE >= WARNING_DATE - render date in red warning colour
+    if (currentDateComparable >= warningDateComparable) {
+      return "secondary";
     }
-  };
-
-  const handleClickOpen = (e, item) => {
-    let currentState = e.currentTarget.value;
-    if (currentState === "false") {
-      e.currentTarget.value = true;
-      item.isOpen = true;
-    } else {
-      e.currentTarget.value = false;
-      item.isOpen = false;
-    }
+    return "primary";
   };
 
   return (
@@ -89,6 +72,7 @@ const List = (props) => {
       <h1 className="uppercase py-2 px-3 font-bold text-xl">
         Your stored foods
       </h1>
+      <p>Red: Within 3 days of expiry</p>
       <table className="table">
         <thead>
           <tr>
@@ -120,11 +104,11 @@ const List = (props) => {
           {stateList.map((item) => {
             return (
               <ListItem
+                key={item.existsId}
                 item={item}
-                changeQuantity={changeQuantity}
-                handleClickFrg={handleClickFrg}
-                handleClickFrz={handleClickFrz}
+                onChange={handleOnChange}
                 deleteByItem={props.deleteByItem}
+                threeDayWarning={threeDayWarning}
               />
             );
           })}
@@ -132,14 +116,18 @@ const List = (props) => {
       </table>
       <Button
         onClick={() => {
-          props.deleteAll();
+          console.log("click");
+          props.deleteAll().then(() => {
+            setListState([]);
+            props.deleteList();
+          });
         }}
       >
         Delete list
       </Button>
       <Button
-        disabled={stateList.length === 0}
-        onClick={() => props.saveList()}
+        // disabled={stateList.length === 0}
+        onClick={() => props.saveList(stateList)}
       >
         Save list items
       </Button>

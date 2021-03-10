@@ -1,4 +1,4 @@
-const QuantityList = ({ changeQuantity, existsId, initialQuantity }) => {
+const QuantityList = ({ onChange, initialQuantity }) => {
   let options = [];
   for (let i = 1; i <= 10; i++) {
     let option = (
@@ -16,7 +16,7 @@ const QuantityList = ({ changeQuantity, existsId, initialQuantity }) => {
         name="quantity"
         tabIndex="1"
         onChange={(e) => {
-          changeQuantity(existsId, e);
+          onChange(e.target.value);
         }}
         value={initialQuantity}
       >

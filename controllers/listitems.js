@@ -82,9 +82,10 @@ exports.deleteItem = async (req, res) => {
 
 exports.deleteAll = async (req, res) => {
   console.log("body delete all", req.body);
-  // const { _id } = req.decoded;
+  const { _id } = req.decoded;
+  console.log("id", _id);
   try {
-    const _id = req.body._id; // or req.body.data._id
+    const _id = req.decoded._id; // or req.body.data._id
     StoredFood.deleteMany({ ownerId: _id }, (err) => {
       if (err) {
         console.log(err);
@@ -97,6 +98,6 @@ exports.deleteAll = async (req, res) => {
   }
   return res.status(200).json({
     success: true,
-    message: "User list deleted",
+    message: "Users list deleted",
   });
 };

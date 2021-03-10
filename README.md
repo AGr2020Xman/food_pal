@@ -7,6 +7,7 @@
 ~~ Under development ~~
 
 A MERN application to deal with food education and tackle wastage. Allows the user to query a database for foods, and add those products to a tracking list. This list allows them to keep track of when they've go something stored at home, and when it is likely to expire, or at least reduce in quality.
+We need to tackle wastage in the home, and the best way will be to provide users with clear information and easy methods of tracking to keep up with modern fast-paced lifestyles.
 
 ## Contents
 
@@ -79,8 +80,11 @@ _Main feature with working search filter, and current food choices uploaded to t
 ## Future
 
 - lazy loading or paginated food cards
-- Thorough styling of all pages and elements
-- Fixing list item manipulation
+- Thorough styling of all pages and elements (in-progress)
+- Fixing list item manipulation (in-progress)
+- include react-widgets for easier input of new expiry dates
+- Admin console to approve new foods
+- Tracking of other users lists
 - Fixing major bugs (especially those pertaining to primary function)
 
 ## Questions

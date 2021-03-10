@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { activateUser } from "../../utils/userFunctions";
 import { useHistory } from "react-router-dom";
 import { checkFormFields } from "./checkFormFields";
+import { toast } from "react-toastify";
 
 function Activate() {
   const history = useHistory();
@@ -40,10 +41,12 @@ function Activate() {
         // console.log(res.data);
         if (res.data.error) {
           errors["failure"] = `${res.data.message}`;
+          toast.dark(`${res.data.message}`);
         } else {
           console.log("Form submitted");
           setTimeout(() => {
             errors["success"] = "Success! Redirecting to sign in page";
+            toast.light('"Success! Redirecting back to sign in page"');
             history.push("/signin");
           }, 3000);
         }
@@ -51,6 +54,7 @@ function Activate() {
         errors["failure"] =
           "Unable to activate account, please check you entered the correct details.";
         setFormState({ ...formState, errors });
+        toast.dark("Error activating. Please check code and try again.");
       }
     } else {
       console.log("Form has errors.");

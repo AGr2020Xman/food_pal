@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { registerUser } from "../../utils/userFunctions";
 import { checkFormFields } from "./checkFormFields";
 
@@ -44,9 +45,11 @@ function Signup(props) {
         console.log(res.data);
         if (res.data.error) {
           errors["failure"] = `${res.data.message}`;
+          toast.dark("Failed to register user");
         } else {
           console.log("Form submitted");
           errors["failure"] = "Success! Redirecting...";
+          toast("Success! Redirecting to account activation...");
           setRegisterState({ ...registerState, errors });
           setTimeout(() => {
             history.push("/activate");
@@ -59,6 +62,7 @@ function Signup(props) {
     } else {
       console.log("Form has errors.");
       errors["failure"] = "Error signing up";
+      toast("Error signing up...Please try again");
       setRegisterState({ ...registerState, errors });
     }
   };

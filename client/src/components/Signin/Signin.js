@@ -6,7 +6,7 @@ import { setAuthToken } from "../../utils/setAuthToken";
 import { useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Button from "@material-ui/core/Button";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 function Signin() {
   const history = useHistory();
@@ -51,24 +51,20 @@ function Signin() {
       await appDispatch({ type: SET_CURRENT_USER, payload: decodedToken });
       errors["success"] = "Success! Redirecting...";
       setFormState({ ...formState, errors });
-
+      toast("Logging in...");
       setTimeout(() => {
         history.push("/home");
+        toast("Success! Redirecting");
       }, 2000);
     } catch (error) {
       errors["failure"] = error.response.data.message;
       setFormState({ ...formState, errors });
-      // toast.dark(error.response.data.message);
-      // console.log(error);
-      // console.log(appState);
+
       appDispatch({
         type: GET_ERRORS,
         payload: error,
       });
-
-      // return error ? console.log(error) : "";
-      // console.log(appState);
-      // console.log(appState.errors);
+      toast.dark("Something went wrong...Try again");
     }
   };
 

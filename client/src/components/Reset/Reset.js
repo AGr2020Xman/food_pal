@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { resetPassword } from "../../utils/userFunctions";
 import { checkFormFields } from "./checkFormFields";
 
-function Signup(props) {
+function Reset(props) {
   const history = useHistory();
 
   const [resetState, setResetState] = useState({
@@ -42,8 +43,10 @@ function Signup(props) {
         console.log(res.data);
         if (res.data.error) {
           errors["message"] = `${res.data.message}`;
+          toast(`${res.data.message}`);
         } else {
           console.log("Password Reset");
+          toast("Password reset, redirecting to sign in...");
           setTimeout(() => {
             history.push("/signin");
           }, 2500);
@@ -56,6 +59,8 @@ function Signup(props) {
     } else {
       console.log("Form has errors.");
       errors["message"] = "Error with either code or unmatched passwords";
+      toast("Error, please check details are correct");
+
       setResetState({ ...resetState, errors });
     }
   };
@@ -129,4 +134,4 @@ function Signup(props) {
   );
 }
 
-export default Signup;
+export default Reset;

@@ -17,11 +17,11 @@ export const updateItems = async (listUpdateArray) => {
 };
 
 export const deleteItem = async (config) => {
-  return axios.delete("/api/listitems/", config);
+  return axios.delete("/api/listitem", config);
 };
 
 export const deleteAll = async (config) => {
-  return axios.delete("/api/listitems/", config); //req.decoded required for _id
+  return axios.delete("/api/listitems", config); //req.decoded required for _id
 };
 
 export const addFood = async (payload) => {

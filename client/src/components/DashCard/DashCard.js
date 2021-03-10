@@ -106,7 +106,7 @@ export const DashCard = React.memo(function SolidGameCard() {
             image={
               "https://live.staticflickr.com/1052/872371771_a1bfa803a2_b.jpg"
             }
-            href="/"
+            href="/add_food"
           />
         </Grid>
         <Grid item>

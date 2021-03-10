@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { forgotPassword } from "../../utils/userFunctions";
 import { checkFormFields } from "./checkFormFields";
+import { toast } from "react-toastify";
 
 function Forgot(props) {
   const history = useHistory();
@@ -36,10 +37,13 @@ function Forgot(props) {
         const res = await forgotPassword(userData);
         if (res.data.error) {
           errors["message"] = `${res.data.message}`;
+          toast.dark(`${res.data.message}`);
         } else {
           errors["message"] = res.data.message;
+          toast.light(`${res.data.message}`);
+
           setTimeout(() => {
-            history.push("/reset");
+            history.push("/signin");
           }, 2500);
         }
       } catch (error) {

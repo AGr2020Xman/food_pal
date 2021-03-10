@@ -2,6 +2,7 @@ import React from "react";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import DashCard from "../DashCard/DashCard";
+import "./Home.css";
 
 const Home = () => {
   return (

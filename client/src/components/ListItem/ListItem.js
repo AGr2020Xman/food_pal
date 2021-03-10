@@ -5,45 +5,50 @@ import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/core/styles";
 import QuantityList from "../QuantityList/Quantity";
-import CustomOpenSeal from "../OpenSealedButton/OpenSeal";
 
-const ListItem = ({
-  item,
-  changeQuantity,
-  handleClickFrg,
-  handleClickFrz,
-  deleteByItem,
-}) => {
+const ListItem = ({ item, onChange, deleteByItem, threeDayWarning }) => {
   return (
     <tr key={item.existsId}>
-      <td value={item.name} onChange={() => {}}>
-        {item.name}
+      <td onChange={() => {}}>{item.name}</td>
+      <td>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => onChange({ ...item, isOpen: !item.isOpen })}
+        >
+          {item.isOpen ? <CheckIcon /> : <CloseIcon />}
+        </Button>
       </td>
-      {/* {item.isOpen ? <CheckIcon /> : <CloseIcon />} */}
-      <td value={item.isOpen}>
-        {/* <Button
-                    value={item.isOpen}
-                    onClick={(e) => handleClickOpen(e, item)}
-                  >
-                    {item.isOpen ? <CheckIcon /> : <CloseIcon />}
-                  </Button> */}
-        <CustomOpenSeal item={item.isOpen} />
+      <td>
+        <Button
+          variant="outlined"
+          color={threeDayWarning(item.expiryDate)}
+          //   disabled
+        >
+          {item.expiryDate}
+        </Button>
       </td>
-      <td value={item.expiryDate}>{item.expiryDate}</td>
       <td>
         <QuantityList
-          changeQuantity={changeQuantity}
-          existsId={item.existsId}
+          onChange={(value) => onChange({ ...item, quantity: value })}
           initialQuantity={item.quantity}
         />
       </td>
-      <td value={item.inFridge}>
-        <Button value={item.inFridge} onClick={(e) => handleClickFrg(e, item)}>
+      <td>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => onChange({ ...item, inFridge: !item.inFridge })}
+        >
           {item.inFridge ? "True" : "False"}
         </Button>
       </td>
-      <td value={item.inFreezer}>
-        <Button value={item.inFreezer} onClick={(e) => handleClickFrz(e, item)}>
+      <td>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => onChange({ ...item, inFreezer: !item.inFreezer })}
+        >
           {item.inFreezer ? "True" : "False"}
         </Button>
       </td>
@@ -54,9 +59,7 @@ const ListItem = ({
           // className={classes.button}
           startIcon={<DeleteForeverIcon />}
           onClick={() => {
-            console.log(item.existsId);
             deleteByItem(item.existsId);
-            // props.deleteRow(item.existsId);
           }}
         >
           Delete

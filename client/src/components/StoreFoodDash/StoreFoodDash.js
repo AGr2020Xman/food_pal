@@ -16,6 +16,8 @@ import {
   deleteAll,
 } from "../../utils/foodApi";
 import "./Fix.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -84,19 +86,14 @@ const StoredFoodDash = () => {
 
   // [{}]
 
-  const addListItem = async (item) => {
-    // take e.target.id
-    console.log(item);
-    await setList([...listItems, item]);
-    console.log(listItems);
-    // createListItems(listItems);
-    // [...listItems]
-    // food -> [{},...]
+  const addListItem = (item) => {
+    setList([...listItems, item]);
+    toast("Item Added !");
   };
 
-  const saveList = () => {
-    console.log("list items in save", listItems);
-    createListItems(listItems);
+  const saveList = (items) => {
+    console.log("list items in save", items);
+    createListItems(items);
   };
 
   const deleteByItem = async (existsId) => {
@@ -121,8 +118,20 @@ const StoredFoodDash = () => {
   const deleteRow = (existsId) => {
     setList(listItems.filter((item) => item.existsId !== existsId));
   };
+
+  const deleteList = () => {
+    toast("Saved list deleted, don't forget to save!");
+  };
+
   return (
-    <div className="fixsize">
+    <div
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <Container className={classes.cardContainer}>
         <Typography variant="h6" gutterBottom>
           Find and track your foods
@@ -144,6 +153,17 @@ const StoredFoodDash = () => {
             return (
               <Grid item xs={12} sm={4} md={4} key={food._id}>
                 <FoodCard addListItem={addListItem} food={food} />
+                <ToastContainer
+                  position="top-center"
+                  autoClose={1000}
+                  hideProgressBar={false}
+                  newestOnTop
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
               </Grid>
             );
           })}
@@ -153,10 +173,22 @@ const StoredFoodDash = () => {
           <Grid item xs={12}>
             <List
               listItems={listItems}
+              deleteAll={deleteAll}
+              deleteList={deleteList}
               deleteByItem={deleteByItem}
               saveList={saveList}
-              deleteAll={deleteAll}
               initial={initialList}
+            />
+            <ToastContainer
+              position="top-center"
+              autoClose={2500}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
             />
           </Grid>
         </Grid>
