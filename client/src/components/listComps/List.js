@@ -21,26 +21,29 @@ const List = (props) => {
   const [stateList, setListState] = useState([]);
 
   useEffect(() => {
-    const settingList = async () => {
-      await setListState([...props.listItems]);
+    const settingList = () => {
+      console.log([...props.listItems]);
+      setListState([...props.listItems]);
+      console.log("listInit", stateList);
     };
     settingList();
   }, [props.listItems]);
 
-  const updateInput = (e, existsId) => {
-    const listItems = [...stateList];
-    const change = [...listItems.splice(existsId, 1)];
-    change[0].quantity = e.target.value;
-    listItems.push(change);
-    setListState([...listItems]);
-  };
+  // const updateInput = (e, existsId) => {
+  //   const listItems = [...stateList];
+  //   const change = [...listItems.splice(existsId, 1)];
+  //   change[0].quantity = e.target.value;
+  //   listItems.push(change);
+  //   setListState([...listItems]);
+  // };
 
   const changeQuantity = (existsId, e) => {
-    const newList = stateList;
-    const change = [...newList.splice(existsId, 1)];
+    // const newList = stateList;
+    const change = [...stateList.splice(existsId, 1)];
+    console.log("targetv", change);
     change[0].quantity = e.target.value;
-    newList.push(change);
-    setListState(...newList);
+    stateList.push(change);
+    setListState(...stateList);
   };
 
   const handleClickFrz = (e, item) => {
@@ -68,6 +71,7 @@ const List = (props) => {
       item.inFridge = false;
     }
   };
+  console.log("preMap", stateList);
 
   return (
     <div>
@@ -103,6 +107,7 @@ const List = (props) => {
         {/*contentEditable*/}
         <tbody>
           {stateList.map((item) => {
+            console.log(item);
             return (
               <tr key={item.existsId}>
                 <td value={item.name} onChange={() => {}}>
@@ -160,7 +165,12 @@ const List = (props) => {
       >
         Delete list
       </Button>
-      <Button onClick={() => props.saveList()}>Save list items</Button>
+      <Button
+        disabled={stateList.length === 0}
+        onClick={() => props.saveList()}
+      >
+        Save list items
+      </Button>
     </div>
   );
 };
