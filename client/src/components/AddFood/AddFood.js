@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import { addFood } from "../../utils/foodApi";
 
-const useStyles = makeStyles({});
+// const useStyles = makeStyles({});
 
 const AddDash = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [formState, setFormState] = useState({
     name: "",

@@ -3,7 +3,6 @@ import { Button } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
-import { makeStyles } from "@material-ui/core/styles";
 import QuantityList from "../QuantityList/Quantity";
 
 const ListItem = ({ item, onChange, deleteByItem, threeDayWarning }) => {

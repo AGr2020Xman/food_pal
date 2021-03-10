@@ -1,40 +1,25 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
 // import Editable from "../Editable/Editable";
-import dateFormat from "dateformat";
 
 import { Button } from "@material-ui/core";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import CheckIcon from "@material-ui/icons/Check";
-import CloseIcon from "@material-ui/icons/Close";
-import { makeStyles } from "@material-ui/core/styles";
-import QuantityList from "../QuantityList/Quantity";
-import CustomOpenSeal from "../OpenSealedButton/OpenSeal";
 import ListItem from "../ListItem/ListItem";
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   button: {
+//     margin: theme.spacing(1),
+//   },
+// }));
 
 const List = (props) => {
   // console.log("props", props.listItems);
-  const classes = useStyles();
+  // const classes = useStyles();
   const [stateList, setListState] = useState([]);
 
   useEffect(() => {
     setListState([...props.listItems]);
     console.log("listInit", stateList);
   }, [props.listItems]);
-
-  // const updateInput = (e, existsId) => {
-  //   const listItems = [...stateList];
-  //   const change = [...listItems.splice(existsId, 1)];
-  //   change[0].quantity = e.target.value;
-  //   listItems.push(change);
-  //   setListState([...listItems]);
-  // };
 
   const handleOnChange = (item) => {
     setListState(

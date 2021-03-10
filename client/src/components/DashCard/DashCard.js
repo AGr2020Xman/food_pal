@@ -1,8 +1,8 @@
 import React from "react";
 import Color from "color";
-import GoogleFont from "react-google-font-loader";
+// import GoogleFont from "react-google-font-loader";
 import { makeStyles } from "@material-ui/core/styles";
-import { NoSsr } from "@material-ui/core";
+// import { NoSsr } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -83,7 +83,7 @@ export const DashCard = React.memo(function SolidGameCard() {
   const styles = useStyles({ color: "#203f52" });
   const styles2 = useStyles({ color: "#4d137f" });
   const styles3 = useStyles({ color: "#ff9900" });
-  const styles4 = useStyles({ color: "#34241e" });
+  // const styles4 = useStyles({ color: "#34241e" });
   return (
     <>
       <Grid classes={gridStyles} container spacing={4}>
