@@ -8,7 +8,13 @@ import Grid from "@material-ui/core/Grid";
 import useDebounce from "../../utils/debounce";
 import List from "../listComps/List";
 
-import { getFood, getListItems } from "../../utils/foodApi";
+import {
+  getFood,
+  getListItems,
+  createListItems,
+  deleteItem,
+  deleteAll,
+} from "../../utils/foodApi";
 
 import "./Fix.css";
 import { Divider } from "@material-ui/core";
@@ -31,6 +37,7 @@ const StoredFoodDash = () => {
   const [products, setProducts] = useState([]);
   const [query, setQuery] = useState("");
   const [listItems, setList] = useState([]);
+  const [initialList, setInitialList] = useState([]);
   const classes = useStyles();
 
   const debouncedQuery = useDebounce(query, 500);
@@ -52,10 +59,15 @@ const StoredFoodDash = () => {
   });
 
   useEffect(() => {
+    console.log("getting list items");
     const getItems = async () => {
       await getListItems(config)
         .then((res) => {
           setList([...listItems, ...res.data.listArray]);
+          console.log("list items got", listItems);
+          console.log("done");
+          setInitialList([...res.data.listArray]);
+          console.log("initial", initialList);
         })
         .catch((err) => {
           console.log("error getting items", err);
@@ -68,14 +80,40 @@ const StoredFoodDash = () => {
 
   const addListItem = async (item) => {
     // take e.target.id
-    await setList([...listItems, item]);
+
+    setList([...listItems, item]);
     // createListItems(listItems);
-    console.log("listItems", listItems);
-    console.log(item);
     // [...listItems]
     // food -> [{},...]
   };
 
+  const saveList = () => {
+    console.log("list items in save", listItems);
+    createListItems(listItems);
+  };
+
+  const deleteByItem = async (existsId) => {
+    const token = localStorage.getItem("userToken");
+    let config = {
+      headers: {
+        Authorization: `${token}`,
+      },
+      data: {
+        //! Take note of the `data` keyword. This is the request body.
+        existsId: existsId,
+      },
+    };
+    try {
+      await deleteItem(config);
+      deleteRow(existsId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteRow = (existsId) => {
+    setList(listItems.filter((item) => item.existsId !== existsId));
+  };
   return (
     <div className="fixsize">
       <Container className={classes.container}>
@@ -96,7 +134,7 @@ const StoredFoodDash = () => {
           {filteredProducts.map((food) => {
             // console.log("in map", food);
             return (
-              <Grid item xs={6} sm={3} key={food._id}>
+              <Grid item xs={12} sm={4} md={3} key={food._id}>
                 <FoodCard addListItem={addListItem} food={food} />
               </Grid>
             );
@@ -104,8 +142,14 @@ const StoredFoodDash = () => {
         </Grid>
         <Divider />
         <Grid container>
-          <Grid item>
-            <List listItems={listItems} />
+          <Grid item xs={12}>
+            <List
+              listItems={listItems}
+              deleteByItem={deleteByItem}
+              saveList={saveList}
+              deleteAll={deleteAll}
+              initial={initialList}
+            />
           </Grid>
         </Grid>
       </Container>
