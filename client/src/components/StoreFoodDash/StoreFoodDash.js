@@ -6,8 +6,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import useDebounce from "../../utils/debounce";
-import List from "../listComps/List";
-
+import List from "../List/List";
+import { Divider } from "@material-ui/core";
 import {
   getFood,
   getListItems,
@@ -15,13 +15,19 @@ import {
   deleteItem,
   deleteAll,
 } from "../../utils/foodApi";
-
 import "./Fix.css";
-import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     margin: theme.spacing(3),
+    alignContent: "center",
+  },
+  cardContainer: {
+    height: "100%",
+    width: "100%",
+    margin: theme.spacing(3),
+    justifyContent: "center",
+    textAlign: "center",
   },
   search: {
     width: "100%",
@@ -80,8 +86,9 @@ const StoredFoodDash = () => {
 
   const addListItem = async (item) => {
     // take e.target.id
-
-    setList([...listItems, item]);
+    console.log(item);
+    await setList([...listItems, item]);
+    console.log(listItems);
     // createListItems(listItems);
     // [...listItems]
     // food -> [{},...]
@@ -116,7 +123,7 @@ const StoredFoodDash = () => {
   };
   return (
     <div className="fixsize">
-      <Container className={classes.container}>
+      <Container className={classes.cardContainer}>
         <Typography variant="h6" gutterBottom>
           Find and track your foods
         </Typography>
@@ -129,12 +136,13 @@ const StoredFoodDash = () => {
           onChange={(event) => setQuery(event.target.value)}
         />
       </Container>
-      <Container className={classes.container}>
+      <Divider />
+      <Container className={classes.cardContainer}>
         <Grid container spacing={3}>
           {filteredProducts.map((food) => {
             // console.log("in map", food);
             return (
-              <Grid item xs={12} sm={4} md={3} key={food._id}>
+              <Grid item xs={12} sm={4} md={4} key={food._id}>
                 <FoodCard addListItem={addListItem} food={food} />
               </Grid>
             );

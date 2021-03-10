@@ -21,6 +21,14 @@ const useStyles = makeStyles({
   media: {
     height: 260,
   },
+  uniform: {
+    height: "100%",
+    width: "100%",
+  },
+  leftAlign: {
+    display: "flex",
+    justifyContent: "flex-start",
+  },
 });
 
 const getFormattedDate = (standardShelfLife) => {
@@ -88,7 +96,7 @@ const FoodCard = (props) => {
   };
 
   return (
-    <Card className={`${classes.root}`} key={props.food._id}>
+    <Card className={`${classes.uniform}`} key={props.food._id}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
           {props.food.name}
@@ -97,42 +105,42 @@ const FoodCard = (props) => {
           {props.food.isFresh ? "Fresh produce" : "Perishable Item"}
         </Typography>
         <Divider />
-        {/* <Typography variant="body2" color="textSecondary" component="p"> */}
-        <table>
-          <thead>
-            <tr>
-              <th className="fit">Standard shelf life</th>
-              <th className="fit">Safe to refrigerate</th>
-              <th className="fit">Safe to freeze</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                {props.standardShelfLife === "1"
-                  ? `${props.food.standardShelfLife} day`
-                  : `${props.food.standardShelfLife} days`}
-              </td>
-              <td>
-                {props.food.canRefrigerate ? (
-                  fridgeExpiryView(props.food.fridgeExpiry)
-                ) : (
-                  <CancelOutlinedIcon />
-                )}
-              </td>
-              <td>
-                {props.food.canFreeze ? (
-                  freezerExpiryView(props.food.freezerExpiry)
-                ) : (
-                  <CancelOutlinedIcon />
-                )}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        {/* </Typography> */}
+        <Typography variant="body2" color="textSecondary" component="p">
+          <table>
+            <thead>
+              <tr>
+                <th className="fit">Standard shelf life</th>
+                <th className="fit">Safe to refrigerate</th>
+                <th className="fit">Safe to freeze</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {props.standardShelfLife === "1"
+                    ? `${props.food.standardShelfLife} day`
+                    : `${props.food.standardShelfLife} days`}
+                </td>
+                <td>
+                  {props.food.canRefrigerate ? (
+                    fridgeExpiryView(props.food.fridgeExpiry)
+                  ) : (
+                    <CancelOutlinedIcon />
+                  )}
+                </td>
+                <td>
+                  {props.food.canFreeze ? (
+                    freezerExpiryView(props.food.freezerExpiry)
+                  ) : (
+                    <CancelOutlinedIcon />
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions className={classes.leftAlign}>
         <Button
           onClick={() => props.addListItem(item)}
           size="small"
