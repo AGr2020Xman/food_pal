@@ -1,13 +1,14 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
 // import Editable from "../Editable/Editable";
-import { createListItems, deleteItem, deleteAll } from "../../utils/foodApi";
 import { Button } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/core/styles";
 import QuantityList from "../QuantityList/Quantity";
+import CustomOpenSeal from "../OpenSealedButton/OpenSeal";
+import ListItem from "../ListItem/ListItem";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -39,11 +40,11 @@ const List = (props) => {
 
   const changeQuantity = (existsId, e) => {
     const newList = stateList;
-    const change = [...newList.splice(existsId, 1)];
-    console.log("targetv", change);
-    change[0].quantity = e.target.value;
-    newList.push(change);
-    setListState(...newList);
+    let index = newList.findIndex((i) => i.existsId === existsId);
+    console.log(index, newList[index]);
+    newList[index].quantity = e.target.value;
+    console.log(newList);
+    setListState([...newList]);
   };
 
   const handleClickFrz = (e, item) => {
@@ -71,7 +72,17 @@ const List = (props) => {
       item.inFridge = false;
     }
   };
-  console.log("preMap", stateList);
+
+  const handleClickOpen = (e, item) => {
+    let currentState = e.currentTarget.value;
+    if (currentState === "false") {
+      e.currentTarget.value = true;
+      item.isOpen = true;
+    } else {
+      e.currentTarget.value = false;
+      item.isOpen = false;
+    }
+  };
 
   return (
     <div>
@@ -107,53 +118,14 @@ const List = (props) => {
         {/*contentEditable*/}
         <tbody>
           {stateList.map((item) => {
-            console.log(item);
             return (
-              <tr key={item.existsId}>
-                <td value={item.name} onChange={() => {}}>
-                  {item.name}
-                </td>
-                <td>{item.isOpen ? <CheckIcon /> : <CloseIcon />}</td>
-                <td value={item.expiryDate}>{item.expiryDate}</td>
-                <td>
-                  <QuantityList
-                    changeQuantity={changeQuantity}
-                    existsId={item.existsId}
-                    initialQuantity={item.quantity}
-                  />
-                </td>
-                <td value={item.inFridge}>
-                  <Button
-                    value={item.inFridge}
-                    onClick={(e) => handleClickFrg(e, item)}
-                  >
-                    {item.inFridge ? "True" : "False"}
-                  </Button>
-                </td>
-                <td value={item.inFreezer}>
-                  <Button
-                    value={item.inFreezer}
-                    onClick={(e) => handleClickFrz(e, item)}
-                  >
-                    {item.inFreezer ? "True" : "False"}
-                  </Button>
-                </td>
-                <td>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    // className={classes.button}
-                    startIcon={<DeleteForeverIcon />}
-                    onClick={() => {
-                      console.log(item.existsId);
-                      props.deleteByItem(item.existsId);
-                      // props.deleteRow(item.existsId);
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </td>
-              </tr>
+              <ListItem
+                item={item}
+                changeQuantity={changeQuantity}
+                handleClickFrg={handleClickFrg}
+                handleClickFrz={handleClickFrz}
+                deleteByItem={props.deleteByItem}
+              />
             );
           })}
         </tbody>
