@@ -38,12 +38,12 @@ const List = (props) => {
   // };
 
   const changeQuantity = (existsId, e) => {
-    // const newList = stateList;
-    const change = [...stateList.splice(existsId, 1)];
+    const newList = stateList;
+    const change = [...newList.splice(existsId, 1)];
     console.log("targetv", change);
     change[0].quantity = e.target.value;
-    stateList.push(change);
-    setListState(...stateList);
+    newList.push(change);
+    setListState(...newList);
   };
 
   const handleClickFrz = (e, item) => {
