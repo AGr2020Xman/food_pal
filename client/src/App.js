@@ -36,7 +36,17 @@ function App() {
           draggable
           pauseOnHover
         /> */}
-        <div className="pl-0 pr-0 m-0 container-fluid">
+        <div
+          className="pl-5 pr-5 m-0 container-fluid"
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            // backgroundColor: "blue",
+            // color: "whitesmoke",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <Navbar />
           <Route exact path="/" component={Landing} />
           <div className="p-0 m-0 container-fluid">

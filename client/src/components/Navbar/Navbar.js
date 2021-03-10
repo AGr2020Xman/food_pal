@@ -56,7 +56,7 @@ const Navbar = () => {
   );
   const userLink = (
     <List className={`${classes.menuButton} ${classes.navbarDisplayFlex}`}>
-      <Button color="primary" variant="contained" href="/">
+      <Button color="primary" variant="contained" href="/home">
         Home
       </Button>
       <Button color="secondary" variant="contained" onClick={handleLogOut}>
