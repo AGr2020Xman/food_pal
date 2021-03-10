@@ -92,7 +92,9 @@ exports.deleteAll = async (req, res) => {
         console.log(`List items belonging to ${_id} are deleted`);
       }
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
   return res.status(200).json({
     success: true,
     message: "User list deleted",
