@@ -44,11 +44,9 @@ function Activate() {
           toast.dark(`${res.data.message}`);
         } else {
           console.log("Form submitted");
-          setTimeout(() => {
-            errors["success"] = "Success! Redirecting to sign in page";
-            toast("Success! Redirecting back to sign in page");
-            history.push("/signin");
-          }, 3000);
+          errors["success"] = "Success! Redirecting to sign in page";
+          toast("Success! Redirecting back to sign in page");
+          history.push("/signin");
         }
       } catch (error) {
         errors["failure"] =
