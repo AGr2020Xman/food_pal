@@ -46,7 +46,7 @@ function Activate() {
           console.log("Form submitted");
           setTimeout(() => {
             errors["success"] = "Success! Redirecting to sign in page";
-            toast.light('"Success! Redirecting back to sign in page"');
+            toast("Success! Redirecting back to sign in page");
             history.push("/signin");
           }, 3000);
         }
