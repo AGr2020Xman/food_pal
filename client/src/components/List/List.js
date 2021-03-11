@@ -1,24 +1,32 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
 // import Editable from "../Editable/Editable";
-
+import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import ListItem from "../ListItem/ListItem";
 
-// const useStyles = makeStyles((theme) => ({
-//   button: {
-//     margin: theme.spacing(1),
-//   },
-// }));
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+  saveList: {
+    backgroundColor: theme.palette.signin.main,
+    color: theme.palette.contrastText,
+    "&:hover": {
+      backgroundColor: "#15ad41",
+      color: "#FFF",
+    },
+  },
+}));
 
 const List = (props) => {
   // console.log("props", props.listItems);
-  // const classes = useStyles();
+  const classes = useStyles();
   const [stateList, setListState] = useState([]);
 
   useEffect(() => {
     setListState([...props.listItems]);
-    console.log("listInit", stateList);
+    // console.log("listInit", stateList);
   }, [props.listItems]);
 
   const handleOnChange = (item) => {
@@ -100,17 +108,19 @@ const List = (props) => {
         </tbody>
       </table>
       <Button
+        color="secondary"
+        variant="contained"
         onClick={() => {
-          console.log("click");
           props.deleteAll().then(() => {
             setListState([]);
-            props.deleteList();
+            props.deleteList(stateList);
           });
         }}
       >
         Delete list
       </Button>
       <Button
+        className={classes.saveList}
         // disabled={stateList.length === 0}
         onClick={() => props.saveList(stateList)}
       >

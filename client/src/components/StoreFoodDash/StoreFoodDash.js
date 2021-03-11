@@ -67,15 +67,15 @@ const StoredFoodDash = () => {
   });
 
   useEffect(() => {
-    console.log("getting list items");
+    // console.log("getting list items");
     const getItems = async () => {
       await getListItems(config)
         .then((res) => {
           setList([...listItems, ...res.data.listArray]);
-          console.log("list items got", listItems);
-          console.log("done");
+          // console.log("list items got", listItems);
+          // console.log("done");
           setInitialList([...res.data.listArray]);
-          console.log("initial", initialList);
+          // console.log("initial", initialList);
         })
         .catch((err) => {
           console.log("error getting items", err);
@@ -92,8 +92,8 @@ const StoredFoodDash = () => {
   };
 
   const saveList = (items) => {
-    console.log("list items in save", items);
     createListItems(items);
+    toast("Saved");
   };
 
   const deleteByItem = async (existsId) => {
@@ -119,8 +119,10 @@ const StoredFoodDash = () => {
     setList(listItems.filter((item) => item.existsId !== existsId));
   };
 
-  const deleteList = () => {
-    toast("Saved list deleted, don't forget to save!");
+  const deleteList = (items) => {
+    toast("Saved list deleted");
+    // console.log(items);
+    // createListItems(items);
   };
 
   return (

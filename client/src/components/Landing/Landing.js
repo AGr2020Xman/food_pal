@@ -8,7 +8,24 @@ const Landing = () => {
   return (
     <div>
       <div className="landing">
-        <div>FoodPal - Signup for free!</div>
+        <Grid container>
+          <Grid item xs={12}>
+            <span style={{ display: "flex", justifyContent: "center" }}>
+              FoodPal
+            </span>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "20px",
+            }}
+          >
+            <span>End waste in the home!</span>
+          </Grid>
+        </Grid>
       </div>
       <Divider />
       <div>

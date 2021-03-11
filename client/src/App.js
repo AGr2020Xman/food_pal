@@ -18,7 +18,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { AppContextProvider } from "./store";
 import PrivateRoute from "./Auth";
 import { ToastContainer } from "react-toastify";
-
+import theme from "./components/MuiTheme/Theme";
+import { ThemeProvider } from "@material-ui/core/styles";
 import "./App.css";
 import Activate from "./components/Activate/Activate";
 
@@ -26,17 +27,7 @@ function App() {
   return (
     <AppContextProvider>
       <Router>
-        <div
-          className="pl-5 pr-5 m-0 container-fluid"
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            // backgroundColor: "blue",
-            // color: "whitesmoke",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+        <ThemeProvider theme={theme}>
           <ToastContainer
             position="top-center"
             autoClose={2500}
@@ -48,23 +39,17 @@ function App() {
             draggable
             pauseOnHover
           />
-          <div className="p-0 m-0 container-fluid">
-            <Navbar />
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/signin" component={Signin} />
-            <Route exact path="/signup" component={Signup} />
-            <Route exact path="/activate" component={Activate} />
-            <Route exact path="/reset" component={Reset} />
-            <Route exact path="/forgot" component={Forgot} />
-            <PrivateRoute component={Home} path="/home" exact />
-            <PrivateRoute
-              component={StoredFoodDash}
-              path="/foodpal_list"
-              exact
-            />
-            <PrivateRoute component={AddDash} path="/add_food" exact />
-          </div>
-        </div>
+          <Navbar />
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/signin" component={Signin} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/activate" component={Activate} />
+          <Route exact path="/reset" component={Reset} />
+          <Route exact path="/forgot" component={Forgot} />
+          <PrivateRoute component={Home} path="/home" exact />
+          <PrivateRoute component={StoredFoodDash} path="/foodpal_list" exact />
+          <PrivateRoute component={AddDash} path="/add_food" exact />
+        </ThemeProvider>
       </Router>
     </AppContextProvider>
   );

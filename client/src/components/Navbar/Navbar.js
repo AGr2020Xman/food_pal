@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(3),
   },
   title: {
     flexGrow: 1,
@@ -24,6 +24,18 @@ const useStyles = makeStyles((theme) => ({
   navbarDisplayFlex: {
     display: `flex`,
     justifyContent: `space-between`,
+  },
+  dashHomeButton: {
+    backgroundColor: theme.palette.tertiary.main,
+    color: theme.palette.contrastText,
+  },
+  signin: {
+    backgroundColor: theme.palette.signin.main,
+    color: theme.palette.contrastText,
+  },
+  signup: {
+    backgroundColor: theme.palette.signup.main,
+    color: theme.palette.contrastText,
   },
 }));
 
@@ -43,13 +55,13 @@ const Navbar = () => {
 
   const loginRegLink = (
     <List className={`${classes.menuButton} ${classes.navbarDisplayFlex}`}>
-      <Button color="primary" variant="contained" href="/">
+      <Button className={classes.dashHomeButton} variant="contained" href="/">
         Dashboard
       </Button>
-      <Button color="secondary" variant="contained" href="/signin">
+      <Button className={classes.signin} variant="contained" href="/signin">
         Sign in
       </Button>
-      <Button color="secondary" variant="contained" href="/signup">
+      <Button className={classes.signup} variant="contained" href="/signup">
         Sign up
       </Button>
     </List>

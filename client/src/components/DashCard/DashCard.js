@@ -19,7 +19,10 @@ const useGridStyles = makeStyles(({ breakpoints }) => ({
   },
 }));
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: theme.spacing(3),
+  },
   actionArea: {
     borderRadius: 16,
     transition: "0.2s",
